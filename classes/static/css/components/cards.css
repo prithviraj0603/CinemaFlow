@@ -1,0 +1,248 @@
+/**
+ * CinemaFlow Card Components
+ * Movie posters, theatre showtimes, and recommendation cards.
+ */
+
+/* Generic Surface Card */
+.cf-card {
+  background-color: var(--cf-bg-surface);
+  border: 1px solid var(--cf-border-subtle);
+  border-radius: var(--cf-radius-md);
+  padding: var(--cf-space-5);
+  transition: border-color var(--cf-transition-fast), transform var(--cf-transition-fast), box-shadow var(--cf-transition-fast);
+}
+
+.cf-card-elevated {
+  background-color: var(--cf-bg-surface-elevated);
+  border-color: var(--cf-border-medium);
+  box-shadow: var(--cf-shadow-md);
+}
+
+.cf-card-interactive:hover {
+  border-color: var(--cf-border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--cf-shadow-lg);
+}
+
+/* ==========================================================================
+   Movie Poster Card
+   ========================================================================== */
+.cf-movie-card {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--cf-transition-normal);
+  text-decoration: none;
+}
+
+.cf-movie-card:hover {
+  transform: translateY(-4px);
+}
+
+.cf-poster-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--cf-radius-md);
+  overflow: hidden;
+  background-color: var(--cf-bg-surface);
+  border: 1px solid var(--cf-border-subtle);
+  box-shadow: var(--cf-shadow-sm);
+  transition: all var(--cf-transition-normal);
+}
+
+.cf-movie-card:hover .cf-poster-wrap {
+  border-color: var(--cf-border-strong);
+  box-shadow: var(--cf-shadow-lg);
+}
+
+.cf-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--cf-transition-smooth);
+}
+
+.cf-movie-card:hover .cf-poster-img {
+  transform: scale(1.04);
+}
+
+/* Poster Overlays */
+.cf-poster-rating-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(11, 13, 19, 0.95) 0%, rgba(11, 13, 19, 0.4) 65%, transparent 100%);
+  padding: var(--cf-space-3) var(--cf-space-3) var(--cf-space-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cf-rating-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-accent-gold);
+}
+
+.cf-rating-chip svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--cf-accent-gold);
+}
+
+.cf-censor-chip {
+  font-size: 0.7rem;
+  font-weight: var(--cf-weight-semibold);
+  color: var(--cf-text-secondary);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* Card Details */
+.cf-movie-details {
+  padding-top: var(--cf-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+}
+
+.cf-movie-title {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-base);
+  font-weight: var(--cf-weight-semibold);
+  color: var(--cf-text-primary);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--cf-transition-fast);
+}
+
+.cf-movie-card:hover .cf-movie-title {
+  color: var(--cf-accent-primary);
+}
+
+.cf-movie-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-muted);
+}
+
+.cf-movie-genres {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   Theatre Showtime Card
+   ========================================================================== */
+.cf-theatre-card {
+  background-color: var(--cf-bg-surface);
+  border: 1px solid var(--cf-border-subtle);
+  border-radius: var(--cf-radius-md);
+  padding: var(--cf-space-5);
+  margin-bottom: var(--cf-space-4);
+  transition: border-color var(--cf-transition-fast);
+}
+
+.cf-theatre-card:hover {
+  border-color: var(--cf-border-medium);
+}
+
+.cf-theatre-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+  padding-bottom: var(--cf-space-4);
+  border-bottom: 1px solid var(--cf-border-subtle);
+}
+
+.cf-theatre-name {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+}
+
+.cf-theatre-location {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 2px;
+}
+
+.cf-theatre-amenities {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  flex-wrap: wrap;
+}
+
+.cf-amenity-tag {
+  font-size: 0.72rem;
+  color: var(--cf-text-secondary);
+  background: var(--cf-bg-surface-elevated);
+  padding: 3px 8px;
+  border-radius: var(--cf-radius-xs);
+}
+
+/* Showtime Button Grid */
+.cf-showtime-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-3);
+  margin-top: var(--cf-space-4);
+}
+
+.cf-showtime-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-bg-surface-elevated);
+  color: var(--cf-text-primary);
+  min-width: 95px;
+  text-decoration: none;
+  transition: all var(--cf-transition-fast);
+  position: relative;
+}
+
+.cf-showtime-btn:hover {
+  border-color: var(--cf-accent-primary);
+  background-color: var(--cf-bg-surface-hover);
+  transform: translateY(-1px);
+}
+
+.cf-showtime-time {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-bold);
+}
+
+.cf-showtime-format {
+  font-size: 0.68rem;
+  color: var(--cf-accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}

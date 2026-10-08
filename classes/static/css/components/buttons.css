@@ -1,0 +1,160 @@
+/**
+ * CinemaFlow Button Components
+ * Consistent button hierarchy: Primary (Vermilion), Secondary (Surface),
+ * Outline, Ghost, Amber (VIP), Icon-only, and loading states.
+ */
+
+.cf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-2);
+  font-family: var(--cf-font-body);
+  font-weight: var(--cf-weight-semibold);
+  font-size: var(--cf-font-size-sm);
+  line-height: 1;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--cf-radius-sm);
+  border: 1px solid transparent;
+  text-align: center;
+  white-space: nowrap;
+  transition: all var(--cf-transition-fast);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cf-btn:disabled,
+.cf-btn.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.cf-btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: var(--cf-font-size-xs);
+  border-radius: var(--cf-radius-xs);
+}
+
+.cf-btn-md {
+  padding: 0.65rem 1.25rem;
+  font-size: var(--cf-font-size-sm);
+}
+
+.cf-btn-lg {
+  padding: 0.85rem 1.75rem;
+  font-size: var(--cf-font-size-base);
+  border-radius: var(--cf-radius-md);
+}
+
+.cf-btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* Primary Button (Cinematic Vermilion) */
+.cf-btn-primary {
+  background-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+  border-color: var(--cf-accent-primary);
+  box-shadow: 0 2px 8px var(--cf-accent-primary-glow);
+}
+
+.cf-btn-primary:hover {
+  background-color: var(--cf-accent-primary-hover);
+  border-color: var(--cf-accent-primary-hover);
+  box-shadow: 0 4px 14px var(--cf-accent-primary-glow);
+  transform: translateY(-1px);
+}
+
+.cf-btn-primary:active {
+  background-color: var(--cf-accent-primary-active);
+  transform: translateY(0);
+}
+
+/* Secondary Surface Button */
+.cf-btn-secondary {
+  background-color: var(--cf-bg-surface-elevated);
+  color: var(--cf-text-primary);
+  border-color: var(--cf-border-medium);
+}
+
+.cf-btn-secondary:hover {
+  background-color: var(--cf-bg-surface-hover);
+  border-color: var(--cf-border-strong);
+  color: #FFFFFF;
+}
+
+/* Outline Button */
+.cf-btn-outline {
+  background-color: transparent;
+  color: var(--cf-text-primary);
+  border-color: var(--cf-border-medium);
+}
+
+.cf-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--cf-text-primary);
+}
+
+/* Ghost Button */
+.cf-btn-ghost {
+  background-color: transparent;
+  color: var(--cf-text-secondary);
+  border-color: transparent;
+}
+
+.cf-btn-ghost:hover {
+  background-color: var(--cf-bg-surface-hover);
+  color: var(--cf-text-primary);
+}
+
+/* Amber / VIP Button */
+.cf-btn-gold {
+  background: linear-gradient(135deg, #F5A623 0%, #D97706 100%);
+  color: #0B0D13;
+  font-weight: var(--cf-weight-bold);
+  box-shadow: 0 2px 10px var(--cf-shadow-glow-gold);
+}
+
+.cf-btn-gold:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Icon Button */
+.cf-btn-icon {
+  padding: 0.6rem;
+  border-radius: var(--cf-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cf-btn-icon.cf-btn-sm { padding: 0.4rem; }
+.cf-btn-icon.cf-btn-lg { padding: 0.8rem; }
+
+/* Loading Spinner on Button */
+.cf-btn.is-loading {
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.cf-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: calc(50% - 9px);
+  left: calc(50% - 9px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: cf-spin 0.6s linear infinite;
+}
+
+@keyframes cf-spin {
+  to { transform: rotate(360deg); }
+}

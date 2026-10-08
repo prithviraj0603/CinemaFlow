@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <header th:fragment="header" class="cf-header">
+    <div class="cf-container cf-header-inner">
+      <!-- Brand Logo -->
+      <a th:href="@{/}" class="cf-brand" aria-label="CinemaFlow Home">
+        <div class="cf-brand-mark">
+          <svg viewBox="0 0 24 24">
+            <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2zM9 16.5v-9l7 4.5-7 4.5z"/>
+          </svg>
+        </div>
+        <span>Cinema<span class="text-vermilion">Flow</span></span>
+      </a>
+
+      <!-- Center Search -->
+      <div class="cf-nav-center">
+        <div class="cf-search-box">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="global-search-input" class="cf-input cf-search-input" placeholder="Search movies by title, genre, language..." aria-label="Search movies">
+          <div id="search-results-dropdown" class="cf-search-dropdown" style="display: none;"></div>
+        </div>
+        
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+             const searchInput = document.getElementById('global-search-input');
+             const dropdown = document.getElementById('search-results-dropdown');
+             
+             let debounceTimer;
+             
+             searchInput.addEventListener('input', (e) => {
+                 clearTimeout(debounceTimer);
+                 const query = e.target.value.trim().toLowerCase();
+                 
+                 if (query.length < 2) {
+                     dropdown.style.display = 'none';
+                     return;
+                 }
+                 
+                 debounceTimer = setTimeout(() => {
+                     fetch('/api/v1/movies')
+                         .then(res => res.json())
+                         .then(data => {
+                             // Simple client-side filter for now
+                             const matched = data.filter(m => 
+                                m.title && m.title.toLowerCase().includes(query)
+                             ).slice(0, 5);
+                             
+                             if (matched.length > 0) {
+                                 dropdown.innerHTML = matched.map(m => `
+                                     <a href="/movies/${m.id}/showtimes" class="cf-search-item">
+                                         <img src="${m.posterPath || ''}" alt="${m.title}" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
+                                         <div class="cf-search-item-info">
+                                             <span class="cf-search-item-title">${m.title}</span>
+                                             <span class="cf-search-item-meta">${m.duration || ''} • ${m.censorRating || ''}</span>
+                                         </div>
+                                     </a>
+                                 `).join('');
+                                 dropdown.style.display = 'flex';
+                             } else {
+                                 dropdown.innerHTML = '<div style="padding: 1rem; color: #94A3B8; text-align: center;">No movies found</div>';
+                                 dropdown.style.display = 'flex';
+                             }
+                         })
+                         .catch(err => console.error('Search error:', err));
+                 }, 300);
+             });
+             
+             document.addEventListener('click', (e) => {
+                 if (!e.target.closest('.cf-search-box')) {
+                     dropdown.style.display = 'none';
+                 }
+             });
+          });
+        </script>
+      </div>
+
+      <!-- Right Nav Actions -->
+      <div class="cf-nav-right">
+        <button class="cf-location-btn" data-modal-open="city-modal" aria-label="Choose City">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <span id="current-city-label" th:text="${currentCity != null ? currentCity.name : 'Mumbai (MMR)'}">Mumbai (MMR)</span>
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+
+        <a th:href="@{/discover}" class="cf-nav-link-discover">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          <span>What Should I Watch?</span>
+        </a>
+
+        <a th:href="@{/login}" class="cf-btn cf-btn-sm cf-btn-primary">Sign In</a>
+      </div>
+    </div>
+  </header>
+</body>
+</html>

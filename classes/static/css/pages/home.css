@@ -1,0 +1,1573 @@
+/**
+ * CinemaFlow — Premium Cinema Dashboard Stylesheet
+ * Recreates the dense, immersive visual hierarchy of the reference design:
+ * - Compact high-density cinema header
+ * - 2-column layout (Main content ~72% / Right Discovery panel ~28%)
+ * - Cinematic Hero with backdrop, titles, dual CTAs, format pills, and controls
+ * - Compact horizontal movie cards for Now Showing & Trending Now
+ * - Cinemas Near You theatre cards with format pills
+ * - Right-side "What Should I Watch?" interactive progressive panel
+ * - "Personalized for You", "Premium Experiences", and "Your Watchlist" widgets
+ */
+
+/* ==========================================================================
+   Dashboard Global Container
+   ========================================================================== */
+.cf-dashboard-container {
+  width: 100%;
+  max-width: 1720px;
+  margin: 0 auto;
+  padding: 0 var(--cf-space-6);
+}
+
+@media (max-width: 768px) {
+  .cf-dashboard-container {
+    padding: 0 var(--cf-space-3);
+  }
+}
+
+/* 2-Column Grid Layout */
+.cf-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: var(--cf-space-6);
+  padding-top: var(--cf-space-4);
+  padding-bottom: var(--cf-space-12);
+  align-items: start;
+}
+
+@media (max-width: 1400px) {
+  .cf-dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: var(--cf-space-5);
+  }
+}
+
+@media (max-width: 1120px) {
+  .cf-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Compact Premium Header
+   ========================================================================== */
+.cf-header-compact {
+  position: sticky;
+  top: 0;
+  z-index: var(--cf-z-fixed-nav);
+  height: 64px;
+  background-color: rgba(11, 13, 19, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cf-header-compact-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: var(--cf-space-5);
+}
+
+/* Brand Logo */
+.cf-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--cf-font-display);
+  font-size: 1.35rem;
+  font-weight: var(--cf-weight-extrabold);
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.cf-header-logo-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #FF334B 0%, #C4162B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(255, 51, 75, 0.4);
+}
+
+.cf-header-logo-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: #FFFFFF;
+  margin-left: 1px;
+}
+
+/* Navigation Links */
+.cf-header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-6);
+}
+
+.cf-header-nav-link {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-medium);
+  color: var(--cf-text-secondary);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 0;
+  transition: color var(--cf-transition-fast);
+}
+
+.cf-header-nav-link:hover {
+  color: #FFFFFF;
+}
+
+.cf-header-nav-link.is-active {
+  color: #FFFFFF;
+  font-weight: var(--cf-weight-semibold);
+}
+
+.cf-header-nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--cf-accent-primary);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--cf-accent-primary-glow);
+}
+
+/* Header Right Actions */
+.cf-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+}
+
+.cf-city-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--cf-radius-full);
+  color: #FFFFFF;
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-medium);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-city-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cf-city-pill-btn svg.pin {
+  width: 14px;
+  height: 14px;
+  fill: var(--cf-accent-primary);
+}
+
+.cf-city-pill-btn svg.arrow {
+  width: 10px;
+  height: 10px;
+  fill: var(--cf-text-muted);
+}
+
+.cf-header-search-wrap {
+  position: relative;
+  width: 260px;
+}
+
+.cf-header-search-wrap svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  fill: var(--cf-text-muted);
+  pointer-events: none;
+}
+
+.cf-header-search-input {
+  width: 100%;
+  padding: 6px 12px 6px 32px;
+  font-size: var(--cf-font-size-xs);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--cf-radius-full);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-header-search-input::placeholder {
+  color: var(--cf-text-muted);
+}
+
+.cf-header-search-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--cf-accent-primary);
+  box-shadow: 0 0 0 2px var(--cf-accent-primary-subtle);
+}
+
+.cf-auth-btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--cf-radius-full);
+  color: #FFFFFF;
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-medium);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-auth-btn-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #FFFFFF;
+}
+
+.cf-auth-btn-pill svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+@media (max-width: 900px) {
+  .cf-header-nav { display: none; }
+  .cf-header-search-wrap { width: 180px; }
+}
+
+/* ==========================================================================
+   Hero Spotlight Section (Widescreen Cinematic Reference)
+   ========================================================================== */
+.cf-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--cf-radius-xl);
+  overflow: hidden;
+  background-color: #10121A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  margin-bottom: var(--cf-space-6);
+}
+
+.cf-hero-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: brightness(0.75) contrast(1.05);
+  transition: transform 6s ease;
+}
+
+.cf-hero-banner:hover .cf-hero-bg-img {
+  transform: scale(1.02);
+}
+
+/* Dark Cinematic Multi-Layer Gradient Overlays */
+.cf-hero-overlay-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, rgba(11, 13, 19, 0.96) 0%, rgba(11, 13, 19, 0.75) 45%, rgba(11, 13, 19, 0.15) 85%, rgba(11, 13, 19, 0.4) 100%),
+    linear-gradient(180deg, rgba(11, 13, 19, 0.2) 0%, rgba(11, 13, 19, 0.85) 100%);
+  pointer-events: none;
+}
+
+.cf-hero-body-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: var(--cf-space-6) var(--cf-space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.cf-hero-now-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--cf-radius-full);
+  font-size: 0.7rem;
+  font-weight: var(--cf-weight-semibold);
+  color: #E2E8F0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: fit-content;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-hero-now-badge svg {
+  width: 8px;
+  height: 8px;
+  fill: var(--cf-accent-primary);
+}
+
+/* Stylized Film Logo */
+.cf-hero-film-title {
+  font-family: var(--cf-font-display);
+  font-size: 2.75rem;
+  font-weight: var(--cf-weight-extrabold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+
+.cf-hero-subtitle-sub {
+  font-family: var(--cf-font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--cf-text-secondary);
+  margin-bottom: var(--cf-space-3);
+}
+
+/* Metadata Chips Row */
+.cf-hero-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--cf-text-secondary);
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-rating-pill-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cf-accent-gold);
+  font-weight: var(--cf-weight-bold);
+}
+
+.cf-rating-pill-gold svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--cf-accent-gold);
+}
+
+.cf-hero-desc {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #94A3B8;
+  margin-bottom: var(--cf-space-4);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hero Action Buttons */
+.cf-hero-btn-group {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  margin-bottom: var(--cf-space-4);
+}
+
+.cf-btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: linear-gradient(135deg, #FF334B 0%, #E02037 100%);
+  color: #FFFFFF;
+  font-family: var(--cf-font-display);
+  font-size: 0.82rem;
+  font-weight: var(--cf-weight-bold);
+  border-radius: var(--cf-radius-full);
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(255, 51, 75, 0.4);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-btn-hero-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 51, 75, 0.55);
+}
+
+.cf-btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-family: var(--cf-font-display);
+  font-size: 0.82rem;
+  font-weight: var(--cf-weight-medium);
+  border-radius: var(--cf-radius-full);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Format Tags Under Hero */
+.cf-hero-formats-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cf-tag-format-pill {
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: var(--cf-weight-bold);
+  color: #00D2FF;
+  letter-spacing: 0.04em;
+}
+
+/* Carousel Control Arrows */
+.cf-hero-carousel-controls {
+  position: absolute;
+  bottom: var(--cf-space-6);
+  right: var(--cf-space-6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+}
+
+.cf-carousel-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-carousel-arrow-btn:hover {
+  background: var(--cf-accent-primary);
+  border-color: var(--cf-accent-primary);
+  transform: scale(1.08);
+}
+
+.cf-carousel-arrow-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+@media (max-width: 640px) {
+  .cf-hero-banner { height: auto; min-height: 440px; }
+  .cf-hero-body-content { padding: var(--cf-space-5); }
+  .cf-hero-film-title { font-size: 2rem; }
+}
+
+/* ==========================================================================
+   Section Headers (Icon + Title + Subtitle + View All)
+   ========================================================================== */
+.cf-dash-section {
+  margin-bottom: var(--cf-space-6);
+}
+
+.cf-dash-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-dash-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cf-dash-section-title {
+  font-family: var(--cf-font-display);
+  font-size: 1.15rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.cf-dash-section-sub {
+  font-size: 0.75rem;
+  color: var(--cf-text-muted);
+  margin-top: 2px;
+}
+
+.cf-dash-view-all {
+  font-size: 0.75rem;
+  font-weight: var(--cf-weight-semibold);
+  color: var(--cf-text-muted);
+  text-decoration: none;
+  transition: color var(--cf-transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.cf-dash-view-all:hover {
+  color: var(--cf-accent-primary);
+}
+
+/* ==========================================================================
+   Compact Movie Rails & Cards (6 items per row reference)
+   ========================================================================== */
+.cf-cards-carousel-rail {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  position: relative;
+}
+
+@media (max-width: 1400px) {
+  .cf-cards-carousel-rail {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .cf-cards-carousel-rail > *:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .cf-cards-carousel-rail {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .cf-cards-carousel-rail > *:nth-child(n+4) {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cf-cards-carousel-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cf-cards-carousel-rail > *:nth-child(n+3) {
+    display: none;
+  }
+}
+
+.cf-compact-movie-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(19, 23, 34, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all var(--cf-transition-fast);
+  cursor: pointer;
+  position: relative;
+}
+
+.cf-compact-movie-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.cf-compact-poster-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.35;
+  background-color: #12151F;
+  overflow: hidden;
+}
+
+.cf-compact-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.cf-compact-movie-card:hover .cf-compact-poster-img {
+  transform: scale(1.06);
+}
+
+/* Badges on Poster (IMAX, 2D, Rating) */
+.cf-poster-top-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 2px 6px;
+  background: rgba(11, 13, 19, 0.75);
+  backdrop-filter: blur(4px);
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-weight: var(--cf-weight-extrabold);
+  color: #00D2FF;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.cf-poster-top-badge.left {
+  right: auto;
+  left: 6px;
+}
+
+.cf-poster-top-badge.dim {
+  color: #E2E8F0;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.cf-poster-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 18px 8px 6px;
+  background: linear-gradient(180deg, transparent 0%, rgba(11, 13, 19, 0.95) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cf-compact-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.7rem;
+  font-weight: var(--cf-weight-bold);
+  color: #F5A623;
+}
+
+.cf-compact-rating svg {
+  width: 11px;
+  height: 11px;
+  fill: #F5A623;
+}
+
+.cf-compact-format-tag {
+  font-size: 0.62rem;
+  font-weight: var(--cf-weight-semibold);
+  color: var(--cf-text-secondary);
+}
+
+/* Card Details */
+.cf-compact-details {
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cf-compact-title {
+  font-family: var(--cf-font-display);
+  font-size: 0.82rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+
+.cf-compact-genres {
+  font-size: 0.68rem;
+  color: var(--cf-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-compact-duration {
+  font-size: 0.65rem;
+  color: var(--cf-text-muted);
+}
+
+/* ==========================================================================
+   Cinemas Near You (4 Horizontal Cards)
+   ========================================================================== */
+.cf-theatres-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1280px) {
+  .cf-theatres-dash-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cf-theatres-dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cf-dash-theatre-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(19, 23, 34, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 10px;
+  text-decoration: none;
+  transition: all var(--cf-transition-fast);
+  cursor: pointer;
+}
+
+.cf-dash-theatre-card:hover {
+  background: rgba(27, 33, 50, 0.85);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.cf-dash-theatre-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 7px;
+  object-fit: cover;
+  background-color: #1A1E2B;
+  flex-shrink: 0;
+}
+
+.cf-dash-theatre-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cf-dash-theatre-name {
+  font-family: var(--cf-font-display);
+  font-size: 0.8rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-dash-theatre-dist {
+  font-size: 0.68rem;
+  color: var(--cf-text-muted);
+  margin-top: 1px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-dash-theatre-formats {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.cf-dash-fmt-pill {
+  font-size: 0.6rem;
+  font-weight: var(--cf-weight-bold);
+  color: #00D2FF;
+  background: rgba(0, 210, 255, 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.cf-dash-theatre-arrow {
+  color: var(--cf-text-muted);
+  flex-shrink: 0;
+  transition: transform var(--cf-transition-fast), color var(--cf-transition-fast);
+}
+
+.cf-dash-theatre-card:hover .cf-dash-theatre-arrow {
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
+   RIGHT DISCOVERY PANEL (Matching Reference Structure)
+   ========================================================================== */
+.cf-discovery-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-5);
+}
+
+/* Main Interactive Discovery Card */
+.cf-side-discover-card {
+  background: linear-gradient(135deg, rgba(20, 24, 36, 0.95) 0%, rgba(14, 17, 26, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.cf-side-discover-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.cf-side-discover-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #FF334B 0%, #C4162B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 51, 75, 0.4);
+  flex-shrink: 0;
+}
+
+.cf-side-discover-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: #FFFFFF;
+}
+
+.cf-side-discover-title {
+  font-family: var(--cf-font-display);
+  font-size: 0.95rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.cf-side-discover-sub {
+  font-size: 0.68rem;
+  color: var(--cf-text-muted);
+  margin-top: 2px;
+}
+
+.cf-side-discover-close {
+  margin-left: auto;
+  color: var(--cf-text-muted);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+}
+
+/* Section 1: Mood Today */
+.cf-side-group {
+  margin-bottom: 12px;
+}
+
+.cf-side-group-label {
+  font-size: 0.72rem;
+  font-weight: var(--cf-weight-semibold);
+  color: #CBD5E1;
+  margin-bottom: 6px;
+}
+
+.cf-mood-chips-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+}
+
+.cf-mood-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 2px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  color: var(--cf-text-secondary);
+  font-size: 0.62rem;
+  font-weight: var(--cf-weight-medium);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-mood-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+.cf-mood-chip.is-selected {
+  background: rgba(255, 51, 75, 0.15);
+  border-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+}
+
+.cf-mood-chip svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.cf-mood-chip.is-selected svg {
+  fill: var(--cf-accent-primary);
+}
+
+/* Sections 2 & 3: Compact Pill Buttons Grid */
+.cf-pref-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.cf-side-pref-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-side-pref-box:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.cf-side-pref-box.is-selected {
+  border-color: var(--cf-accent-primary);
+  background: rgba(255, 51, 75, 0.1);
+}
+
+.cf-pref-box-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.62rem;
+  color: var(--cf-text-muted);
+}
+
+.cf-pref-box-top svg {
+  width: 11px;
+  height: 11px;
+  fill: currentColor;
+}
+
+.cf-pref-box-val {
+  font-size: 0.68rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Section 4: Toggles & Distance */
+.cf-toggles-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cf-toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: var(--cf-text-secondary);
+  cursor: pointer;
+}
+
+/* Clean Custom Switch */
+.cf-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.cf-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cf-slider-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  transition: 0.2s;
+}
+
+.cf-slider-round:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.cf-switch input:checked + .cf-slider-round {
+  background-color: var(--cf-accent-primary);
+}
+
+.cf-switch input:checked + .cf-slider-round:before {
+  transform: translateX(14px);
+}
+
+/* Distance Slider */
+.cf-side-slider-box {
+  margin-bottom: 8px;
+}
+
+.cf-side-slider-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--cf-text-muted);
+  margin-bottom: 3px;
+}
+
+.cf-side-slider-val {
+  color: var(--cf-accent-primary);
+  font-weight: var(--cf-weight-bold);
+  font-family: var(--cf-font-mono);
+}
+
+.cf-side-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  outline: none;
+}
+
+.cf-side-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cf-accent-primary);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--cf-accent-primary-glow);
+}
+
+/* Date Dropdown Row */
+.cf-side-date-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-side-date-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Big Find My Movie Button */
+.cf-btn-find-exp {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #FF334B 0%, #E02037 100%);
+  border: none;
+  border-radius: var(--cf-radius-sm);
+  color: #FFFFFF;
+  font-family: var(--cf-font-display);
+  font-size: 0.85rem;
+  font-weight: var(--cf-weight-bold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(255, 51, 75, 0.35);
+  transition: all var(--cf-transition-fast);
+  text-decoration: none;
+}
+
+.cf-btn-find-exp:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(255, 51, 75, 0.55);
+}
+
+/* Card 2: Personalized For You */
+.cf-card-personalized {
+  background: linear-gradient(135deg, rgba(20, 24, 36, 0.9) 0%, rgba(15, 18, 27, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.cf-pers-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+}
+
+.cf-pers-header svg {
+  width: 14px;
+  height: 14px;
+  fill: #F5A623;
+}
+
+.cf-pers-sub {
+  font-size: 0.65rem;
+  color: var(--cf-text-muted);
+  margin-bottom: 8px;
+  margin-top: 1px;
+}
+
+.cf-pers-content-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cf-pers-poster-thumb {
+  width: 50px;
+  height: 70px;
+  border-radius: 5px;
+  object-fit: cover;
+  background-color: #1A1E2B;
+  flex-shrink: 0;
+}
+
+.cf-pers-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cf-pers-match-pill {
+  display: inline-block;
+  padding: 1px 6px;
+  background: rgba(255, 51, 75, 0.2);
+  border: 1px solid var(--cf-accent-primary);
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  margin-bottom: 2px;
+}
+
+.cf-pers-title {
+  font-family: var(--cf-font-display);
+  font-size: 0.85rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.cf-pers-genres {
+  font-size: 0.65rem;
+  color: var(--cf-text-secondary);
+}
+
+.cf-pers-meta {
+  font-size: 0.62rem;
+  color: var(--cf-text-muted);
+  margin-bottom: 4px;
+}
+
+.cf-btn-pers-showtimes {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--cf-accent-primary);
+  border-radius: var(--cf-radius-full);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: var(--cf-weight-bold);
+  text-decoration: none;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-btn-pers-showtimes:hover {
+  background: var(--cf-accent-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Card 3: Premium Experiences Banner */
+.cf-card-prem-exp {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 95px;
+  background-color: #12151F;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cf-prem-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.65) contrast(1.1);
+}
+
+.cf-prem-content {
+  position: relative;
+  z-index: 2;
+  padding: 10px 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(11, 13, 19, 0.9) 0%, rgba(11, 13, 19, 0.4) 100%);
+}
+
+.cf-prem-title {
+  font-family: var(--cf-font-display);
+  font-size: 0.78rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cf-prem-fmts {
+  font-size: 0.65rem;
+  color: #CBD5E1;
+}
+
+.cf-prem-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  border-radius: var(--cf-radius-full);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: var(--cf-weight-semibold);
+  width: fit-content;
+  text-decoration: none;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-prem-btn:hover {
+  background: var(--cf-accent-primary);
+}
+
+/* Card 4: Your Watchlist */
+.cf-card-watchlist {
+  background: linear-gradient(135deg, rgba(20, 24, 36, 0.9) 0%, rgba(15, 18, 27, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.cf-watch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cf-watch-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+}
+
+.cf-watch-title-wrap svg {
+  width: 13px;
+  height: 13px;
+  fill: #FF334B;
+}
+
+.cf-watch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.cf-watch-thumb-item {
+  position: relative;
+  aspect-ratio: 1 / 1.35;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #1A1E2B;
+}
+
+.cf-watch-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cf-watch-heart-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cf-watch-heart-overlay svg {
+  width: 9px;
+  height: 9px;
+  fill: #FF334B;
+}
+
+/* ==========================================================================
+   Visual City Selection Modal (Council UI/UX Target)
+   ========================================================================== */
+.cf-modal-city-picker {
+  max-width: 760px;
+  width: 95%;
+  background: #11141D;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--cf-radius-xl);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+
+.cf-modal-city-picker .cf-modal-header {
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #141722;
+}
+
+.cf-modal-city-title {
+  font-family: var(--cf-font-display);
+  font-size: 1.35rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+}
+
+.cf-modal-city-sub {
+  font-size: 0.82rem;
+  color: var(--cf-text-secondary);
+  margin-top: 2px;
+}
+
+.cf-city-search-box {
+  position: relative;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.cf-city-search-icon {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  fill: var(--cf-text-muted);
+  pointer-events: none;
+}
+
+.cf-city-search-input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--cf-radius-md);
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-family: var(--cf-font-body);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-city-search-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--cf-accent-primary);
+  box-shadow: 0 0 0 2px var(--cf-accent-primary-subtle);
+  outline: none;
+}
+
+.cf-city-section-heading {
+  font-size: 0.72rem;
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cf-text-muted);
+  margin-bottom: 12px;
+}
+
+/* 4-column visual city cards grid */
+.cf-city-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+  .cf-city-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+.cf-city-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  position: relative;
+  transition: all 0.22s ease;
+}
+
+.cf-city-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 51, 75, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cf-city-card.is-active {
+  border-color: var(--cf-accent-primary);
+  background: rgba(255, 51, 75, 0.08);
+  box-shadow: 0 0 0 1px var(--cf-accent-primary), 0 8px 24px rgba(255, 51, 75, 0.25);
+}
+
+.cf-city-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 82px;
+  overflow: hidden;
+  background-color: #1A1E2B;
+}
+
+.cf-city-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.cf-city-card:hover .cf-city-card-img {
+  transform: scale(1.08);
+}
+
+.cf-city-check-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cf-accent-primary);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.cf-city-check-badge svg {
+  width: 13px;
+  height: 13px;
+  fill: #FFFFFF;
+}
+
+.cf-city-card.is-active .cf-city-check-badge {
+  display: flex;
+}
+
+.cf-city-card-content {
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #141722;
+}
+
+.cf-city-card.is-active .cf-city-card-content {
+  background: #181C2B;
+}
+
+.cf-city-card-name {
+  font-family: var(--cf-font-display);
+  font-size: 0.85rem;
+  font-weight: var(--cf-weight-bold);
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.cf-city-card-state {
+  font-size: 0.7rem;
+  color: var(--cf-text-muted);
+}
+
+.cf-modal-footer-note {
+  font-size: 0.74rem;
+  color: var(--cf-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+

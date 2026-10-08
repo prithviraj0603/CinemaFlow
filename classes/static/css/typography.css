@@ -1,0 +1,110 @@
+/**
+ * CinemaFlow Typography System
+ * Google Fonts: Outfit (Display/Headings), Inter (Body), JetBrains Mono (Tickets/Code)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--cf-font-display);
+  color: var(--cf-text-primary);
+  line-height: var(--cf-line-height-tight);
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--cf-font-size-3xl); }
+h2 { font-size: var(--cf-font-size-2xl); }
+h3 { font-size: var(--cf-font-size-xl); }
+h4 { font-size: var(--cf-font-size-lg); }
+h5 { font-size: var(--cf-font-size-md); font-weight: var(--cf-weight-semibold); }
+h6 { font-size: var(--cf-font-size-base); font-weight: var(--cf-weight-semibold); }
+
+@media (min-width: 768px) {
+  h1 { font-size: var(--cf-font-size-4xl); }
+  h2 { font-size: var(--cf-font-size-3xl); }
+  h3 { font-size: var(--cf-font-size-2xl); }
+}
+
+/* Display & Hero Headings */
+.display-hero {
+  font-family: var(--cf-font-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: var(--cf-weight-extrabold);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--cf-text-primary);
+}
+
+.heading-section {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-2xl);
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--cf-text-primary);
+}
+
+.heading-card {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-lg);
+  font-weight: var(--cf-weight-semibold);
+  letter-spacing: -0.01em;
+  color: var(--cf-text-primary);
+}
+
+/* Body Scales */
+.body-lg {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height-normal);
+  color: var(--cf-text-secondary);
+}
+
+.body-md {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-base);
+  line-height: var(--cf-line-height-normal);
+  color: var(--cf-text-secondary);
+}
+
+.body-sm {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-sm);
+  line-height: var(--cf-line-height-normal);
+  color: var(--cf-text-secondary);
+}
+
+.caption {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-xs);
+  line-height: var(--cf-line-height-normal);
+  color: var(--cf-text-muted);
+}
+
+/* Monospace (Tickets & Seat Codes) */
+.mono {
+  font-family: var(--cf-font-mono);
+  letter-spacing: 0.04em;
+}
+
+.mono-sm {
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+  letter-spacing: 0.05em;
+}
+
+/* Text Modifiers */
+.text-primary { color: var(--cf-text-primary) !important; }
+.text-secondary { color: var(--cf-text-secondary) !important; }
+.text-muted { color: var(--cf-text-muted) !important; }
+.text-vermilion { color: var(--cf-accent-primary) !important; }
+.text-gold { color: var(--cf-accent-gold) !important; }
+.text-cyan { color: var(--cf-accent-cyan) !important; }
+.text-success { color: var(--cf-status-success) !important; }
+.text-error { color: var(--cf-status-error) !important; }
+
+.font-medium { font-weight: var(--cf-weight-medium); }
+.font-semibold { font-weight: var(--cf-weight-semibold); }
+.font-bold { font-weight: var(--cf-weight-bold); }
+.uppercase { text-transform: uppercase; letter-spacing: 0.06em; }

@@ -1,0 +1,169 @@
+/**
+ * CinemaFlow Digital Boarding Pass Ticket
+ * Authentic cinema entry voucher with perforated divider, scannable QR, and tear marks.
+ */
+
+.cf-ticket-container {
+  max-width: 480px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.cf-ticket {
+  background-color: var(--cf-bg-surface);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--cf-shadow-xl);
+  position: relative;
+}
+
+/* Ticket Top / Movie Section */
+.cf-ticket-top {
+  padding: var(--cf-space-6);
+  position: relative;
+  background: linear-gradient(180deg, var(--cf-bg-surface-elevated) 0%, var(--cf-bg-surface) 100%);
+}
+
+.cf-ticket-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-4);
+}
+
+.cf-ticket-ref {
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-accent-gold);
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: 0.08em;
+}
+
+.cf-ticket-movie-title {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-2xl);
+  font-weight: var(--cf-weight-extrabold);
+  color: var(--cf-text-primary);
+  line-height: 1.15;
+  margin-bottom: var(--cf-space-1);
+}
+
+.cf-ticket-theatre {
+  font-size: var(--cf-font-size-sm);
+  color: var(--cf-text-secondary);
+}
+
+/* Grid of Date, Time, Screen */
+.cf-ticket-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cf-space-3);
+  margin-top: var(--cf-space-6);
+  padding-top: var(--cf-space-4);
+  border-top: 1px solid var(--cf-border-subtle);
+}
+
+.cf-ticket-field-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cf-text-muted);
+  margin-bottom: 2px;
+}
+
+.cf-ticket-field-value {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+}
+
+/* ==========================================================================
+   Perforated Divider with Cutout Notches
+   ========================================================================== */
+.cf-ticket-divider {
+  position: relative;
+  height: 24px;
+  background-color: var(--cf-bg-surface);
+  display: flex;
+  align-items: center;
+}
+
+.cf-ticket-divider::before,
+.cf-ticket-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--cf-bg-base);
+  border: 1px solid var(--cf-border-medium);
+}
+
+.cf-ticket-divider::before {
+  left: -10px;
+}
+
+.cf-ticket-divider::after {
+  right: -10px;
+}
+
+.cf-ticket-perforation-line {
+  width: 100%;
+  border-bottom: 2px dashed var(--cf-border-strong);
+  margin: 0 15px;
+}
+
+/* ==========================================================================
+   Ticket Bottom / QR Code & Barcode Section
+   ========================================================================== */
+.cf-ticket-bottom {
+  padding: var(--cf-space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--cf-bg-surface);
+}
+
+.cf-ticket-qr-wrap {
+  width: 160px;
+  height: 160px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border-radius: var(--cf-radius-md);
+  box-shadow: var(--cf-shadow-md);
+  margin-bottom: var(--cf-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cf-ticket-qr-wrap img,
+.cf-ticket-qr-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cf-ticket-scan-prompt {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-muted);
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-ticket-seats-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  background-color: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--cf-radius-full);
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-sm);
+  color: var(--cf-text-primary);
+  font-weight: var(--cf-weight-bold);
+}

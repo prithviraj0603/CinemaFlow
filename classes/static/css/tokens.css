@@ -1,0 +1,174 @@
+/**
+ * CinemaFlow Design System Tokens
+ * Defines the core visual primitives: colors, typography, spacing,
+ * border-radii, elevation/shadows, transitions, and domain-specific semantics.
+ */
+
+:root {
+  /* ==========================================================================
+     Color Palette: Canvas & Surfaces (Obsidian Cinema Theme)
+     ========================================================================== */
+  --cf-bg-base: #0B0D13;             /* Deepest canvas background */
+  --cf-bg-surface: #131722;          /* Primary card and component surface */
+  --cf-bg-surface-elevated: #1B2132; /* Elevated cards, menus, dropdowns */
+  --cf-bg-surface-hover: #232B40;    /* Hover state for interactive surfaces */
+  --cf-bg-surface-active: #2A344D;   /* Pressed / active state */
+  --cf-bg-glass: rgba(19, 23, 34, 0.85); /* Clean frosted modal/nav backdrop */
+
+  /* ==========================================================================
+     Brand Accents
+     ========================================================================== */
+  --cf-accent-primary: #FF334B;         /* High-energy Cinematic Vermilion */
+  --cf-accent-primary-hover: #E02037;   /* Hover red */
+  --cf-accent-primary-active: #C4162B;  /* Active click red */
+  --cf-accent-primary-subtle: rgba(255, 51, 75, 0.12); /* Tinted pill background */
+  --cf-accent-primary-glow: rgba(255, 51, 75, 0.28);   /* Focus/hover shadow */
+
+  --cf-accent-gold: #F5A623;            /* Golden Amber (VIP / Star ratings) */
+  --cf-accent-gold-subtle: rgba(245, 166, 35, 0.14);
+  --cf-accent-cyan: #00D2FF;            /* IMAX / 3D / Sound badges */
+  --cf-accent-cyan-subtle: rgba(0, 210, 255, 0.12);
+  --cf-accent-purple: #9D4EDD;          /* Special screening tag */
+  --cf-accent-purple-subtle: rgba(157, 78, 221, 0.14);
+
+  /* Status & Feedback */
+  --cf-status-success: #10B981;         /* Green (Available / Confirmed) */
+  --cf-status-success-subtle: rgba(16, 185, 129, 0.14);
+  --cf-status-warning: #F59E0B;         /* Amber (Fast Filling / Timer Alert) */
+  --cf-status-warning-subtle: rgba(245, 158, 11, 0.14);
+  --cf-status-error: #EF4444;           /* Red (Sold Out / Error / Cancelled) */
+  --cf-status-error-subtle: rgba(239, 68, 68, 0.14);
+  --cf-status-info: #3B82F6;            /* Blue (Informational notice) */
+  --cf-status-info-subtle: rgba(59, 130, 246, 0.14);
+
+  /* ==========================================================================
+     Neutral Text Hierarchy & Contrast
+     ========================================================================== */
+  --cf-text-primary: #FFFFFF;           /* Crisp headings and high-emphasis text */
+  --cf-text-secondary: #94A3B8;         /* Subtitles, secondary metadata */
+  --cf-text-muted: #64748B;             /* Captions, inactive controls, labels */
+  --cf-text-disabled: #475569;          /* Disabled buttons and unavailable states */
+  --cf-text-on-accent: #FFFFFF;         /* Text on vermilion button */
+
+  /* ==========================================================================
+     Borders & Dividers
+     ========================================================================== */
+  --cf-border-subtle: rgba(255, 255, 255, 0.08);   /* Standard card hairline border */
+  --cf-border-medium: rgba(255, 255, 255, 0.15);   /* Hovered or focused borders */
+  --cf-border-strong: rgba(255, 255, 255, 0.25);   /* Active state borders */
+  --cf-border-accent: rgba(255, 51, 75, 0.45);     /* Primary brand border */
+
+  /* ==========================================================================
+     Seat Map Semantics
+     ========================================================================== */
+  --cf-seat-classic-border: #475569;
+  --cf-seat-classic-bg: #1A202C;
+  --cf-seat-prime-border: #3B82F6;
+  --cf-seat-prime-bg: #1E293B;
+  --cf-seat-recliner-border: #F5A623;
+  --cf-seat-recliner-bg: #262118;
+  --cf-seat-wheelchair-border: #00D2FF;
+  --cf-seat-wheelchair-bg: #11252E;
+
+  --cf-seat-selected-bg: #10B981;
+  --cf-seat-selected-border: #34D399;
+  --cf-seat-selected-glow: rgba(16, 185, 129, 0.4);
+
+  --cf-seat-locked-bg: #F59E0B;
+  --cf-seat-locked-border: #FBBF24;
+  --cf-seat-locked-glow: rgba(245, 158, 11, 0.35);
+
+  --cf-seat-sold-bg: #161A24;
+  --cf-seat-sold-border: #242A38;
+  --cf-seat-sold-text: #475569;
+
+  /* ==========================================================================
+     Typography
+     ========================================================================== */
+  --cf-font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --cf-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --cf-font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* Scale */
+  --cf-font-size-xs: 0.75rem;    /* 12px */
+  --cf-font-size-sm: 0.875rem;   /* 14px */
+  --cf-font-size-base: 1rem;     /* 16px */
+  --cf-font-size-md: 1.125rem;   /* 18px */
+  --cf-font-size-lg: 1.25rem;    /* 20px */
+  --cf-font-size-xl: 1.5rem;     /* 24px */
+  --cf-font-size-2xl: 1.875rem;  /* 30px */
+  --cf-font-size-3xl: 2.25rem;   /* 36px */
+  --cf-font-size-4xl: 3rem;      /* 48px */
+
+  /* Weights */
+  --cf-weight-normal: 400;
+  --cf-weight-medium: 500;
+  --cf-weight-semibold: 600;
+  --cf-weight-bold: 700;
+  --cf-weight-extrabold: 800;
+
+  /* Line Heights */
+  --cf-line-height-tight: 1.2;
+  --cf-line-height-normal: 1.5;
+  --cf-line-height-relaxed: 1.7;
+
+  /* ==========================================================================
+     Spacing Scale (4px increments)
+     ========================================================================== */
+  --cf-space-1: 0.25rem;   /* 4px */
+  --cf-space-2: 0.5rem;    /* 8px */
+  --cf-space-3: 0.75rem;   /* 12px */
+  --cf-space-4: 1rem;      /* 16px */
+  --cf-space-5: 1.25rem;   /* 20px */
+  --cf-space-6: 1.5rem;    /* 24px */
+  --cf-space-8: 2rem;      /* 32px */
+  --cf-space-10: 2.5rem;   /* 40px */
+  --cf-space-12: 3rem;     /* 48px */
+  --cf-space-16: 4rem;     /* 64px */
+  --cf-space-20: 5rem;     /* 80px */
+
+  /* ==========================================================================
+     Border Radii
+     ========================================================================== */
+  --cf-radius-xs: 4px;
+  --cf-radius-sm: 6px;
+  --cf-radius-md: 10px;
+  --cf-radius-lg: 16px;
+  --cf-radius-xl: 24px;
+  --cf-radius-full: 9999px;
+
+  /* ==========================================================================
+     Elevation & Shadows
+     ========================================================================== */
+  --cf-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --cf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --cf-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --cf-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.75), 0 4px 12px rgba(0, 0, 0, 0.5);
+  --cf-shadow-glow-vermilion: 0 0 20px rgba(255, 51, 75, 0.35);
+  --cf-shadow-glow-gold: 0 0 18px rgba(245, 166, 35, 0.3);
+
+  /* ==========================================================================
+     Transitions & Motion
+     ========================================================================== */
+  --cf-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cf-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cf-transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ==========================================================================
+     Z-Index Layers
+     ========================================================================== */
+  --cf-z-dropdown: 1000;
+  --cf-z-sticky: 1020;
+  --cf-z-fixed-nav: 1030;
+  --cf-z-modal-backdrop: 1040;
+  --cf-z-modal: 1050;
+  --cf-z-toast: 1060;
+  --cf-z-tooltip: 1070;
+
+  /* ==========================================================================
+     Layout Widths
+     ========================================================================== */
+  --cf-container-max: 1240px;
+  --cf-container-narrow: 840px;
+  --cf-header-height: 72px;
+}
