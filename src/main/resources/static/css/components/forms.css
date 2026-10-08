@@ -1,0 +1,126 @@
+/**
+ * CinemaFlow Form Controls & Inputs
+ */
+
+.cf-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  margin-bottom: var(--cf-space-4);
+}
+
+.cf-label {
+  font-family: var(--cf-font-body);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-medium);
+  color: var(--cf-text-secondary);
+}
+
+.cf-label-required::after {
+  content: ' *';
+  color: var(--cf-accent-primary);
+}
+
+/* Input Fields */
+.cf-input,
+.cf-select,
+.cf-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--cf-font-size-sm);
+  color: var(--cf-text-primary);
+  background-color: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-sm);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-input::placeholder,
+.cf-textarea::placeholder {
+  color: var(--cf-text-muted);
+}
+
+.cf-input:focus,
+.cf-select:focus,
+.cf-textarea:focus {
+  border-color: var(--cf-accent-primary);
+  box-shadow: 0 0 0 3px var(--cf-accent-primary-subtle);
+  background-color: var(--cf-bg-surface-hover);
+}
+
+.cf-input:disabled,
+.cf-select:disabled,
+.cf-textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Search Bar Input with Icon */
+.cf-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.cf-search-box svg {
+  position: absolute;
+  left: 1rem;
+  width: 18px;
+  height: 18px;
+  fill: var(--cf-text-muted);
+  pointer-events: none;
+}
+
+.cf-search-input {
+  padding-left: 2.75rem !important;
+  background-color: var(--cf-bg-surface) !important;
+  border-color: var(--cf-border-subtle) !important;
+}
+
+.cf-search-input:focus {
+  border-color: var(--cf-border-strong) !important;
+  background-color: var(--cf-bg-surface-elevated) !important;
+}
+
+/* Range Slider (Distance / Radius) */
+.cf-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--cf-bg-surface-elevated);
+  border-radius: var(--cf-radius-full);
+  outline: none;
+  transition: background var(--cf-transition-fast);
+}
+
+.cf-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cf-accent-primary);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--cf-accent-primary-glow);
+  border: 2px solid #FFFFFF;
+  transition: transform var(--cf-transition-fast);
+}
+
+.cf-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Form Validation Feedback */
+.cf-error-msg {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-status-error);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cf-input.has-error {
+  border-color: var(--cf-status-error) !important;
+}

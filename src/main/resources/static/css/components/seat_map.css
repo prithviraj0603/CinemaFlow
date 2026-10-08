@@ -1,0 +1,231 @@
+/**
+ * CinemaFlow Interactive Seat Map Visual Language
+ * Curved screen graphic, tier dividers, responsive seat matrix, and legend.
+ */
+
+/* ==========================================================================
+   Curved Cinema Screen Graphic
+   ========================================================================== */
+.cf-screen-wrap {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto var(--cf-space-10);
+  text-align: center;
+  position: relative;
+}
+
+.cf-screen-curve {
+  height: 12px;
+  border-top: 4px solid #38BDF8;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -4px 20px rgba(56, 189, 248, 0.4);
+  margin-bottom: var(--cf-space-2);
+}
+
+.cf-screen-light {
+  height: 35px;
+  background: linear-gradient(to bottom, rgba(56, 189, 248, 0.15) 0%, transparent 100%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  filter: blur(4px);
+}
+
+.cf-screen-label {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Seat Layout Grid
+   ========================================================================== */
+.cf-seatmap-viewport {
+  overflow-x: auto;
+  padding: var(--cf-space-4) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cf-seatmap-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-6);
+  min-width: 580px;
+}
+
+.cf-tier-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.cf-tier-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--cf-space-2) var(--cf-space-4);
+  border-bottom: 1px solid var(--cf-border-subtle);
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cf-text-secondary);
+}
+
+.cf-seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cf-row-label {
+  width: 24px;
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-semibold);
+  color: var(--cf-text-muted);
+  text-align: center;
+  user-select: none;
+}
+
+.cf-seat-aisle {
+  width: 20px;
+}
+
+/* ==========================================================================
+   Individual Seat Element
+   ========================================================================== */
+.cf-seat {
+  width: 28px;
+  height: 26px;
+  border-radius: 5px 5px 2px 2px;
+  border: 1px solid var(--cf-seat-classic-border);
+  background-color: var(--cf-seat-classic-bg);
+  color: var(--cf-text-secondary);
+  font-family: var(--cf-font-mono);
+  font-size: 10px;
+  font-weight: var(--cf-weight-medium);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+  position: relative;
+  user-select: none;
+}
+
+/* Tiers */
+.cf-seat.tier-prime {
+  border-color: var(--cf-seat-prime-border);
+  background-color: var(--cf-seat-prime-bg);
+}
+
+.cf-seat.tier-recliner {
+  width: 34px;
+  height: 30px;
+  border-radius: 6px 6px 3px 3px;
+  border-color: var(--cf-seat-recliner-border);
+  background-color: var(--cf-seat-recliner-bg);
+}
+
+/* Hover Available */
+.cf-seat:hover:not(.is-sold):not(.is-locked):not(.is-selected) {
+  transform: scale(1.15);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  z-index: 2;
+}
+
+/* Status: Selected */
+.cf-seat.is-selected {
+  background-color: var(--cf-seat-selected-bg) !important;
+  border-color: var(--cf-seat-selected-border) !important;
+  color: #FFFFFF !important;
+  font-weight: var(--cf-weight-bold);
+  box-shadow: 0 0 10px var(--cf-seat-selected-glow);
+  transform: scale(1.1);
+  z-index: 3;
+}
+
+/* Status: Locked (by another user) */
+.cf-seat.is-locked {
+  background-color: var(--cf-seat-locked-bg) !important;
+  border-color: var(--cf-seat-locked-border) !important;
+  color: #0B0D13 !important;
+  cursor: not-allowed;
+  animation: cf-pulse-lock 2s infinite ease-in-out;
+}
+
+@keyframes cf-pulse-lock {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.55; }
+}
+
+/* Status: Sold */
+.cf-seat.is-sold {
+  background-color: var(--cf-seat-sold-bg) !important;
+  border-color: var(--cf-seat-sold-border) !important;
+  color: var(--cf-seat-sold-text) !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+/* ==========================================================================
+   Seat Legend
+   ========================================================================== */
+.cf-seat-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-6);
+  flex-wrap: wrap;
+  padding: var(--cf-space-4) 0;
+  border-top: 1px solid var(--cf-border-subtle);
+  border-bottom: 1px solid var(--cf-border-subtle);
+  margin-top: var(--cf-space-8);
+}
+
+.cf-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+}
+
+.cf-legend-sample {
+  width: 18px;
+  height: 16px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Bottom Checkout Bar
+   ========================================================================== */
+.cf-seat-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--cf-bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--cf-border-subtle);
+  padding: var(--cf-space-4) var(--cf-space-6);
+  z-index: var(--cf-z-sticky);
+}
+
+.cf-seat-dock-inner {
+  max-width: var(--cf-container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-4);
+}

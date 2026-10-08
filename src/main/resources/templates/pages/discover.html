@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Should I Watch? — CinemaFlow Experience Discovery</title>
+  <meta name="description" content="Discover your ideal cinema experience. Match your location, screen formats (IMAX with Laser, 4DX, Dolby Atmos), seating comfort, sound, and dining preferences to top theatre showtimes.">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" th:href="@{/css/cinema-flow.css}">
+  <link rel="stylesheet" th:href="@{/css/pages/discover.css}">
+</head>
+<body class="cf-discover-page">
+
+  <!-- Ambient Cinematic Background Lighting -->
+  <div class="cf-discover-ambient">
+    <div class="cf-ambient-beam-red"></div>
+    <div class="cf-ambient-beam-cyan"></div>
+    <div class="cf-ambient-grid"></div>
+  </div>
+
+  <!-- Global Header Fragment -->
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <main class="cf-discover-container">
+
+    <!-- Stepper & Dynamic Headline Header -->
+    <section class="cf-stepper-header">
+      <div class="cf-stepper-badge" id="stepper-badge-step">Step 1 of 3</div>
+      <h1 class="cf-stepper-title" id="stepper-main-headline">Where are you watching?</h1>
+      <p class="cf-stepper-subtitle" id="stepper-sub-headline">
+        Select your city or allow geolocation to discover screens and showtimes closest to you.
+      </p>
+
+      <!-- Progress Track Bar -->
+      <div class="cf-progress-track-wrap">
+        <div class="cf-progress-steps-row">
+          <span class="cf-progress-step-label is-active" id="step-lbl-1">1. Location</span>
+          <span class="cf-progress-step-label" id="step-lbl-2">2. Screen & Experience</span>
+          <span class="cf-progress-step-label" id="step-lbl-3">3. Personalize</span>
+        </div>
+        <div class="cf-progress-bar-bg">
+          <div class="cf-progress-bar-fill" id="wizard-progress-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wizard Steps Wrapper -->
+    <div id="wizard-steps-wrapper">
+
+      <!-- ==========================================================================
+           STEP 1: LOCATION
+           ========================================================================== -->
+      <section class="cf-wizard-step is-active" id="wizard-step-1">
+        <div class="cf-step-card-glass">
+          
+          <div class="cf-location-header-box">
+            <!-- GPS Current Location Button -->
+            <button class="cf-gps-btn" id="gps-detect-btn" type="button">
+              <div class="cf-gps-beacon">
+                <span class="cf-gps-beacon-ring"></span>
+                <span class="cf-gps-beacon-dot"></span>
+              </div>
+              <span>Use Current Location</span>
+            </button>
+
+            <div class="cf-flex cf-items-center cf-gap-3">
+              <!-- City Search Box -->
+              <div class="cf-search-box" style="max-width: 320px;">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="discover-city-search" class="cf-input cf-search-input" placeholder="Search another city..." aria-label="Search city">
+              </div>
+
+              <!-- Secondary Quick Action: All Metros -->
+              <button class="cf-skip-action-btn" id="step-1-all-metros-btn" type="button">
+                <span>Any Metro Region</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="caption uppercase font-semibold text-muted" style="margin-bottom: var(--cf-space-3);">
+            Select Major Metropolitan Region
+          </div>
+
+          <!-- Cities Grid with Photographic Thumbnails -->
+          <div class="cf-cities-interactive-grid">
+            
+            <!-- Bengaluru (Featured Default) -->
+            <div class="cf-city-exp-card is-selected" data-city-id="bengaluru" data-city-name="Bengaluru">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_bengaluru.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Bengaluru</div>
+                  <div class="cf-city-theatres-count">18 Theatres Active • IMAX Laser Hub</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mumbai -->
+            <div class="cf-city-exp-card" data-city-id="mumbai" data-city-name="Mumbai (MMR)">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_mumbai.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Mumbai</div>
+                  <div class="cf-city-theatres-count">24 Theatres Active • MMR</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delhi NCR -->
+            <div class="cf-city-exp-card" data-city-id="delhi" data-city-name="Delhi NCR">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_delhi.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Delhi NCR</div>
+                  <div class="cf-city-theatres-count">22 Theatres Active • Capital</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hyderabad -->
+            <div class="cf-city-exp-card" data-city-id="hyderabad" data-city-name="Hyderabad">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_hyderabad.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Hyderabad</div>
+                  <div class="cf-city-theatres-count">16 Theatres Active • Large Format</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chennai -->
+            <div class="cf-city-exp-card" data-city-id="chennai" data-city-name="Chennai">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_chennai.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Chennai</div>
+                  <div class="cf-city-theatres-count">14 Theatres Active • Atmos Hub</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pune -->
+            <div class="cf-city-exp-card" data-city-id="pune" data-city-name="Pune">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_pune.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Pune</div>
+                  <div class="cf-city-theatres-count">12 Theatres Active • Maharashtra</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kolkata -->
+            <div class="cf-city-exp-card" data-city-id="kolkata" data-city-name="Kolkata">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_kolkata.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Kolkata</div>
+                  <div class="cf-city-theatres-count">10 Theatres Active • East Hub</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ahmedabad -->
+            <div class="cf-city-exp-card" data-city-id="ahmedabad" data-city-name="Ahmedabad">
+              <div class="cf-city-card-bg" th:style="'background-image: url(' + @{/images/city_ahmedabad.jpg} + ');'"></div>
+              <div class="cf-city-card-overlay"></div>
+              <div class="cf-city-card-content">
+                <div class="cf-city-card-header">
+                  <div class="cf-city-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  </div>
+                  <div class="cf-city-check-icon">✓</div>
+                </div>
+                <div>
+                  <div class="cf-city-name-lg">Ahmedabad</div>
+                  <div class="cf-city-theatres-count">9 Theatres Active • Gujarat</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Step 1 Toolbar -->
+          <div class="cf-wizard-toolbar">
+            <div class="cf-toolbar-left">
+              <span class="caption text-muted">Step 1 of 3</span>
+              <button class="cf-skip-action-btn" id="step-1-skip-btn" type="button">
+                <span>Skip (Default to Bengaluru)</span>
+              </button>
+            </div>
+            <div class="cf-toolbar-right">
+              <button class="cf-btn cf-btn-lg cf-btn-primary" id="step-1-continue-btn" type="button">
+                <span>Continue to Screen Formats</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           STEP 2: SCREEN & EXPERIENCE (7 Distinct Formats + Secondary "Any Format")
+           ========================================================================== -->
+      <section class="cf-wizard-step" id="wizard-step-2">
+        <div class="cf-step-card-glass">
+          
+          <div class="cf-flex cf-justify-between cf-items-center cf-flex-wrap cf-gap-3" style="margin-bottom: var(--cf-space-4);">
+            <div class="caption uppercase font-semibold text-muted">
+              Select one or multiple screen technologies
+            </div>
+            <div class="cf-flex cf-items-center cf-gap-3">
+              <button class="cf-skip-action-btn" id="step-2-any-format-btn" type="button">
+                <span>⚡ Any Format / No Preference</span>
+              </button>
+              <span class="caption text-vermilion font-semibold">Multi-Select Enabled</span>
+            </div>
+          </div>
+
+          <!-- 7 Distinct Interactive Screen Cards -->
+          <div class="cf-screen-cards-grid">
+            
+            <!-- Card 1: IMAX with Laser -->
+            <div class="cf-screen-card is-selected" data-screen-format="IMAX with Laser">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span class="text-cyan">IMAX</span> Laser
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Dual 4K laser engines delivering unmatched brightness, pure deep blacks, and expanded 1.43:1 aspect ratio.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">Dual 4K Laser • 12-Ch Audio</span>
+                <span class="caption text-gold">Flagship Visuals</span>
+              </div>
+            </div>
+
+            <!-- Card 2: IMAX (Digital) -->
+            <div class="cf-screen-card is-selected" data-screen-format="IMAX">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span class="text-cyan">IMAX</span> Digital
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Signature curved geometry and custom acoustic tuning engineered for legendary giant-screen immersion.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">Curved Giant Screen • Custom Audio</span>
+                <span class="caption text-cyan">Giant Screen</span>
+              </div>
+            </div>
+
+            <!-- Card 3: Dolby Atmos -->
+            <div class="cf-screen-card is-selected" data-screen-format="Dolby Atmos">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span style="color: #60A5FA;">Dolby</span> Atmos
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Revolutionary 360-degree spatial audio dome. Sounds move freely around you with pinpoint realism.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">64-Channel Audio Dome</span>
+                <span class="caption text-cyan">Acoustic Gold</span>
+              </div>
+            </div>
+
+            <!-- Card 4: 4DX Motion -->
+            <div class="cf-screen-card" data-screen-format="4DX">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span style="color: #F87171;">4DX</span> Motion
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Sensory thrills with synchronized pitch/roll seats, wind gales, ambient scents, water mist, and lightning.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">Dynamic Motion • Environmental</span>
+                <span class="caption text-muted">Theme Park Feel</span>
+              </div>
+            </div>
+
+            <!-- Card 5: RealD 3D -->
+            <div class="cf-screen-card" data-screen-format="3D">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span style="color: #C084FC;">RealD</span> 3D
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                High-lumen circular stereoscopic glasses for seamless depth without eye-strain or ghosting.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">High-Lumen Circular 3D</span>
+                <span class="caption text-muted">Visual Depth</span>
+              </div>
+            </div>
+
+            <!-- Card 6: 2D Standard -->
+            <div class="cf-screen-card" data-screen-format="2D">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span>2D</span> Standard
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Classic high-contrast cinema without glasses. Natural color fidelity, high frame rates, and razor-sharp clarity.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">Pure 4K Digital</span>
+                <span class="caption text-muted">Classic</span>
+              </div>
+            </div>
+
+            <!-- Card 7: Premium / Luxury -->
+            <div class="cf-screen-card" data-screen-format="Premium / Luxury">
+              <div class="cf-screen-card-shine"></div>
+              <div class="cf-screen-card-top">
+                <div class="cf-screen-badge-label">
+                  <span class="text-gold">LUXE</span> Luxury
+                </div>
+                <div class="cf-checkbox-indicator">✓</div>
+              </div>
+              <div class="cf-screen-desc">
+                Ultra-plush motorized leather recliners, personal blankets, curated gourmet lounge, and at-seat butler call.
+              </div>
+              <div class="cf-screen-card-footer">
+                <span class="cf-screen-spec">Motorized Recliner + Dining</span>
+                <span class="caption text-gold">VIP Treatment</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Step 2 Toolbar -->
+          <div class="cf-wizard-toolbar">
+            <div class="cf-toolbar-left">
+              <button class="cf-btn cf-btn-secondary" id="step-2-back-btn" type="button">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                <span>Back to Location</span>
+              </button>
+            </div>
+            <div class="cf-toolbar-right">
+              <button class="cf-skip-action-btn" id="step-2-skip-btn" type="button">
+                <span>Any Format (Skip)</span>
+              </button>
+              <button class="cf-btn cf-btn-lg cf-btn-primary" id="step-2-continue-btn" type="button">
+                <span>Continue (3 screens selected)</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           STEP 3: PERSONALIZE (Split Layout for 1920x1080 Density)
+           ========================================================================== -->
+      <section class="cf-wizard-step" id="wizard-step-3">
+        
+        <div class="cf-personalize-layout">
+          
+          <!-- Left Column: Preference Selector Groups -->
+          <div class="cf-step-card-glass">
+            
+            <!-- Group 1: Seating Comfort -->
+            <div class="cf-pref-group">
+              <div class="cf-pref-group-header">
+                <div class="cf-pref-group-title">
+                  <svg viewBox="0 0 24 24"><path d="M4 18v3h3v-3h10v3h3v-3h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1z"/></svg>
+                  <span>Seating Comfort</span>
+                </div>
+                <span class="caption text-muted">Desired seating tier</span>
+              </div>
+              <div class="cf-pref-pills-row" id="comfort-pills">
+                <button class="cf-choice-pill" data-val="Standard" type="button">Standard</button>
+                <button class="cf-choice-pill" data-val="Premium" type="button">Premium</button>
+                <button class="cf-choice-pill is-selected" data-val="Recliner" type="button">Plush Recliner</button>
+                <button class="cf-choice-pill" data-val="Luxury" type="button">VIP Luxury Lounge</button>
+                <button class="cf-choice-pill" data-val="No preference" type="button">No Preference</button>
+              </div>
+            </div>
+
+            <!-- Group 2: Sound Acoustics -->
+            <div class="cf-pref-group">
+              <div class="cf-pref-group-header">
+                <div class="cf-pref-group-title">
+                  <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <span>Sound Acoustics</span>
+                </div>
+                <span class="caption text-muted">Surround acoustics setup</span>
+              </div>
+              <div class="cf-pref-pills-row" id="sound-pills">
+                <button class="cf-choice-pill" data-val="Standard" type="button">Standard Sound</button>
+                <button class="cf-choice-pill is-selected" data-val="Dolby Atmos" type="button">Dolby Atmos 360°</button>
+                <button class="cf-choice-pill" data-val="Premium Sound" type="button">Premium Immersive</button>
+                <button class="cf-choice-pill" data-val="No preference" type="button">No Preference</button>
+              </div>
+            </div>
+
+            <!-- Group 3: Audio Track & Subtitles -->
+            <div class="cf-pref-group">
+              <div class="cf-pref-group-header">
+                <div class="cf-pref-group-title">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                  <span>Audio Track & Subtitles</span>
+                </div>
+                <span class="caption text-muted">Spoken dialogue & caption options</span>
+              </div>
+              <div class="cf-pref-pills-row" id="language-pills" style="margin-bottom: var(--cf-space-3);">
+                <button class="cf-choice-pill is-selected" data-val="English" type="button">English</button>
+                <button class="cf-choice-pill" data-val="Hindi" type="button">Hindi</button>
+                <button class="cf-choice-pill" data-val="Kannada" type="button">Kannada</button>
+                <button class="cf-choice-pill" data-val="Tamil" type="button">Tamil</button>
+                <button class="cf-choice-pill" data-val="Telugu" type="button">Telugu</button>
+                <button class="cf-choice-pill" data-val="Malayalam" type="button">Malayalam</button>
+              </div>
+              <div class="cf-pref-pills-row" id="subtitles-pills">
+                <button class="cf-choice-pill is-selected" data-val="With Subtitles" type="button">💬 With Subtitles</button>
+                <button class="cf-choice-pill" data-val="Without Subtitles" type="button">Without Subtitles</button>
+                <button class="cf-choice-pill" data-val="No preference" type="button">No Preference</button>
+              </div>
+            </div>
+
+            <!-- Group 4: Food & Dining -->
+            <div class="cf-pref-group">
+              <div class="cf-pref-group-header">
+                <div class="cf-pref-group-title">
+                  <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                  <span>Food & Dining</span>
+                </div>
+                <span class="caption text-muted">In-cinema dining tier</span>
+              </div>
+              <div class="cf-pref-pills-row" id="food-pills">
+                <button class="cf-choice-pill" data-val="Snacks" type="button">🍿 Popcorn & Snacks</button>
+                <button class="cf-choice-pill is-selected" data-val="Food & Beverage" type="button">🍔 Full Food & Beverage</button>
+                <button class="cf-choice-pill" data-val="Premium F&B" type="button">🍷 Gourmet Luxury Dining</button>
+                <button class="cf-choice-pill" data-val="No preference" type="button">No Preference</button>
+              </div>
+            </div>
+
+            <!-- Group 5: Distance Range Slider -->
+            <div class="cf-pref-group">
+              <div class="cf-pref-group-header">
+                <div class="cf-pref-group-title">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>Maximum Theatre Distance</span>
+                </div>
+                <span class="caption text-muted">Proximity radius from location</span>
+              </div>
+              <div class="cf-distance-slider-box">
+                <div class="cf-distance-meta-row">
+                  <span class="body-sm text-secondary">Search Theatres Within:</span>
+                  <span class="cf-distance-badge-lg" id="discover-distance-badge">10 km</span>
+                </div>
+                <input type="range" class="cf-range" id="discover-distance-slider" min="2" max="30" value="10" step="1">
+              </div>
+            </div>
+
+            <!-- Step 3 Toolbar -->
+            <div class="cf-wizard-toolbar">
+              <div class="cf-toolbar-left">
+                <button class="cf-btn cf-btn-secondary" id="step-3-back-btn" type="button">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                  <span>Back to Screens</span>
+                </button>
+              </div>
+              <div class="cf-toolbar-right">
+                <button class="cf-skip-action-btn" id="step-3-skip-btn" type="button">
+                  <span>Use Standard Blueprint</span>
+                </button>
+                <button class="cf-btn cf-btn-lg cf-btn-primary" id="find-experience-btn" type="button">
+                  <span>Find My Experience →</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Live Integrated "YOUR MOVIE NIGHT" Blueprint -->
+          <aside class="cf-summary-card is-sticky">
+            <div class="cf-flex cf-justify-between cf-items-center cf-flex-wrap cf-gap-2">
+              <div>
+                <div class="caption uppercase font-semibold text-vermilion">Curated Blueprint</div>
+                <h2 class="heading-card" style="font-size: 1.4rem; margin-top: 2px;">Your Movie Night</h2>
+              </div>
+              <span class="cf-badge cf-badge-imax" style="font-size: 0.65rem;">Live Matrix</span>
+            </div>
+
+            <div class="cf-summary-grid">
+              <div class="cf-summary-item" data-edit-step="1" style="cursor: pointer;" title="Click to edit location">
+                <span class="cf-summary-emoji">📍</span>
+                <div>
+                  <div class="cf-summary-label">Location</div>
+                  <div class="cf-summary-val" id="sum-location">Bengaluru</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="2" style="cursor: pointer;" title="Click to edit screens">
+                <span class="cf-summary-emoji">🎬</span>
+                <div>
+                  <div class="cf-summary-label">Screen & Format</div>
+                  <div class="cf-summary-val" id="sum-screen">IMAX Laser + Dolby Atmos</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit sound">
+                <span class="cf-summary-emoji">🔊</span>
+                <div>
+                  <div class="cf-summary-label">Sound Acoustics</div>
+                  <div class="cf-summary-val" id="sum-sound">Dolby Atmos</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit comfort">
+                <span class="cf-summary-emoji">💺</span>
+                <div>
+                  <div class="cf-summary-label">Seating Comfort</div>
+                  <div class="cf-summary-val" id="sum-comfort">Plush Recliner</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit language">
+                <span class="cf-summary-emoji">🌐</span>
+                <div>
+                  <div class="cf-summary-label">Language</div>
+                  <div class="cf-summary-val" id="sum-language">English</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit subtitles">
+                <span class="cf-summary-emoji">💬</span>
+                <div>
+                  <div class="cf-summary-label">Subtitles</div>
+                  <div class="cf-summary-val" id="sum-subtitles">With Subtitles</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit dining">
+                <span class="cf-summary-emoji">🍿</span>
+                <div>
+                  <div class="cf-summary-label">Dining</div>
+                  <div class="cf-summary-val" id="sum-food">Food & Beverage</div>
+                </div>
+              </div>
+
+              <div class="cf-summary-item" data-edit-step="3" style="cursor: pointer;" title="Click to edit distance">
+                <span class="cf-summary-emoji">📍</span>
+                <div>
+                  <div class="cf-summary-label">Radius</div>
+                  <div class="cf-summary-val" id="sum-distance">Within 10 km</div>
+                </div>
+              </div>
+            </div>
+
+            <button class="cf-btn cf-btn-lg cf-btn-primary" id="summary-find-btn" type="button" style="width: 100%; box-shadow: 0 0 24px var(--cf-accent-primary-glow);">
+              <span>Find My Experience →</span>
+            </button>
+          </aside>
+
+        </div>
+
+      </section>
+
+    </div><!-- End wizard-steps-wrapper -->
+
+    <!-- ==========================================================================
+         DISCOVERY RESULTS: Experience Match Cards Ranked (Dual Visuals)
+         ========================================================================== -->
+    <section class="cf-results-section" id="discovery-results-section">
+      <div class="cf-results-header">
+        <div>
+          <div class="caption uppercase font-semibold text-vermilion" id="results-count-badge">Curated Experiences Ranked</div>
+          <h2 class="heading-section" style="font-size: 2.2rem; margin-top: 4px;">Top Matched Cinema Experiences</h2>
+          <p class="body-sm text-muted">Ranked by how closely the theatre auditorium, format, sound, comfort, and showtimes match your blueprint.</p>
+        </div>
+        <button class="cf-btn cf-btn-sm cf-btn-outline" id="modify-blueprint-btn" type="button">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <span>Modify Blueprint</span>
+        </button>
+      </div>
+
+      <!-- Experience Cards Container (Dual Visuals: Poster + Theatre Auditorium) -->
+      <div id="experience-cards-list">
+        <!-- Dynamically populated by discover.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer Fragment -->
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <!-- Core Scripts -->
+  <script th:src="@{/js/core/toast.js}"></script>
+  <script th:src="@{/js/core/modal.js}"></script>
+  <script th:src="@{/js/core/api-client.js}"></script>
+  <!-- Dedicated Page Logic -->
+  <script th:src="@{/js/pages/discover.js}"></script>
+</body>
+</html>

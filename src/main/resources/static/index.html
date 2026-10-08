@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinemaFlow — Curated Movie Discovery &amp; Ticket Booking</title>
+  <meta name="description" content="Discover movies in theatres near you. Filter by genre, format (IMAX, 4DX, 3D), language, and showtimes with CinemaFlow's intelligent cinema dashboard.">
+
+  <!-- Master Design System Stylesheet & Home Dashboard Styles -->
+  <link rel="stylesheet" href="css/cinema-flow.css">
+  <link rel="stylesheet" href="css/pages/home.css">
+</head>
+<body style="background-color: var(--cf-bg-base); color: #FFFFFF;">
+
+  <!-- ==========================================================================
+       Compact Premium Header
+       ========================================================================== -->
+  <header class="cf-header-compact">
+    <div class="cf-dashboard-container cf-header-compact-inner">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="cf-header-brand" aria-label="CinemaFlow Home">
+        <div class="cf-header-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <span>Cinema<span class="text-vermilion">Flow</span></span>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="cf-header-nav" aria-label="Main Navigation">
+        <a href="index.html" class="cf-header-nav-link is-active">Home</a>
+        <a href="#now-showing" class="cf-header-nav-link">Movies</a>
+        <a href="#cinemas-near-you" class="cf-header-nav-link">Theatres</a>
+        <a href="discover.html" class="cf-header-nav-link" style="color: var(--cf-accent-primary); font-weight: var(--cf-weight-bold);">What Should I Watch? ✦</a>
+        <a href="discover.html" class="cf-header-nav-link">Offers</a>
+      </nav>
+
+      <!-- Right Actions: City, Search, Login -->
+      <div class="cf-header-actions">
+        <!-- City Selector Pill -->
+        <button class="cf-city-pill-btn" data-modal-open="city-modal" aria-label="Choose City">
+          <svg viewBox="0 0 24 24" class="pin"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <span id="current-city-label">Bengaluru</span>
+          <svg viewBox="0 0 24 24" class="arrow"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+
+        <!-- Search Input -->
+        <div class="cf-header-search-wrap">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="header-search-input" class="cf-header-search-input" placeholder="Search for movies, actors, directors..." aria-label="Search movies">
+        </div>
+
+        <!-- Auth Button -->
+        <button class="cf-auth-btn-pill" onclick="cfToast.info('User authentication will be configured in Phase 8.', 'Sign In')">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span>Login / Signup</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Dashboard Main 2-Column Grid
+       ========================================================================== -->
+  <main class="cf-dashboard-container">
+    <div class="cf-dashboard-grid">
+
+      <!-- ======================================================================
+           LEFT COLUMN: Main Movie & Cinema Content (~72%)
+           ====================================================================== -->
+      <div class="cf-main-column">
+
+        <!-- 1. Immersive Hero Spotlight -->
+        <section class="cf-hero-banner" aria-label="Hero Spotlight">
+          <img id="hero-bg-img" src="images/dune2_hero.jpg" alt="Dune: Part Two" class="cf-hero-bg-img">
+          <div class="cf-hero-overlay-dark"></div>
+
+          <div class="cf-hero-body-content">
+            <div class="cf-hero-now-badge">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span>Now Showing</span>
+            </div>
+
+            <h1 class="cf-hero-film-title" id="hero-film-title">D U N E</h1>
+            <div class="cf-hero-subtitle-sub" id="hero-film-subtitle">PART TWO</div>
+
+            <div class="cf-hero-meta-row">
+              <div class="cf-rating-pill-gold">
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span id="hero-rating-val">8.9/10 (142K)</span>
+              </div>
+              <span>•</span>
+              <span id="hero-meta-txt">2h 46m • Action • Adventure • Sci-Fi • English, Hindi</span>
+            </div>
+
+            <p class="cf-hero-desc" id="hero-synopsis-txt">
+              Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe...
+            </p>
+
+            <div class="cf-hero-btn-group">
+              <a href="design-system.html#seat-section" class="cf-btn-hero-primary">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                <span>Book Tickets</span>
+              </a>
+              <button class="cf-btn-hero-secondary" onclick="cfToast.info('Opening official 4K IMAX trailer...', 'Trailer Preview')">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <span>Watch Trailer</span>
+              </button>
+            </div>
+
+            <div class="cf-hero-formats-row" id="hero-formats-container">
+              <span class="cf-tag-format-pill">IMAX</span>
+              <span class="cf-tag-format-pill">Dolby Atmos</span>
+              <span class="cf-tag-format-pill">4DX</span>
+              <span class="cf-tag-format-pill">ScreenX</span>
+              <span class="cf-tag-format-pill" style="color: #94A3B8;">3D</span>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="cf-hero-carousel-controls">
+            <button class="cf-carousel-arrow-btn" id="hero-prev-btn" aria-label="Previous Slide">
+              <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <button class="cf-carousel-arrow-btn" id="hero-next-btn" aria-label="Next Slide">
+              <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- 2. Section: Now Showing -->
+        <section class="cf-dash-section" id="now-showing">
+          <div class="cf-dash-section-header">
+            <div>
+              <div class="cf-dash-section-title-wrap">
+                <span>🍿</span>
+                <h2 class="cf-dash-section-title">Now Showing</h2>
+              </div>
+              <p class="cf-dash-section-sub">Blockbusters, fan favorites and the latest releases</p>
+            </div>
+            <a href="discover.html" class="cf-dash-view-all">View All →</a>
+          </div>
+
+          <!-- 6-Card Compact Rail -->
+          <div class="cf-cards-carousel-rail" id="rail-now-showing">
+            
+            <!-- Card 1: Dune -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Dune: Part Two" data-genres="Action, Adventure, Sci-Fi">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_dune2.jpg" alt="Dune: Part Two" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left">IMAX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.9</span>
+                  </div>
+                  <span class="cf-compact-format-tag">2D</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Dune: Part Two</div>
+                <div class="cf-compact-genres">Action • Adventure • Sci-Fi</div>
+                <div class="cf-compact-duration">2h 46m</div>
+              </div>
+            </a>
+
+            <!-- Card 2: Deadpool & Wolverine -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Deadpool & Wolverine" data-genres="Action, Comedy, Sci-Fi">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_deadpool.jpg" alt="Deadpool & Wolverine" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge dim">2D</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.2</span>
+                  </div>
+                  <span class="cf-compact-format-tag">3D</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Deadpool &amp; Wolverine</div>
+                <div class="cf-compact-genres">Action • Comedy • Sci-Fi</div>
+                <div class="cf-compact-duration">2h 07m</div>
+              </div>
+            </a>
+
+            <!-- Card 3: Oppenheimer -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Oppenheimer" data-genres="Biography, Drama, History">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_oppenheimer.jpg" alt="Oppenheimer" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left">IMAX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.7</span>
+                  </div>
+                  <span class="cf-compact-format-tag">70mm</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Oppenheimer</div>
+                <div class="cf-compact-genres">Biography • Drama • History</div>
+                <div class="cf-compact-duration">3h 00m</div>
+              </div>
+            </a>
+
+            <!-- Card 4: Inside Out 2 -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Inside Out 2" data-genres="Animation, Family, Comedy">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_insideout2.jpg" alt="Inside Out 2" class="cf-compact-poster-img" loading="lazy">
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.4</span>
+                  </div>
+                  <span class="cf-compact-format-tag" style="color: #C084FC;">3D</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Inside Out 2</div>
+                <div class="cf-compact-genres">Animation • Family • Comedy</div>
+                <div class="cf-compact-duration">1h 36m</div>
+              </div>
+            </a>
+
+            <!-- Card 5: The Batman -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="The Batman" data-genres="Action, Crime, Drama">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_batman.jpg" alt="The Batman" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge dim">2D</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.1</span>
+                  </div>
+                  <span class="cf-compact-format-tag">Atmos</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">The Batman</div>
+                <div class="cf-compact-genres">Action • Crime • Drama</div>
+                <div class="cf-compact-duration">2h 56m</div>
+              </div>
+            </a>
+
+            <!-- Card 6: Mad Max: Fury Road -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Mad Max: Fury Road" data-genres="Action, Adventure, Sci-Fi">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_madmax.jpg" alt="Mad Max: Fury Road" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3);">4DX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>8.4</span>
+                  </div>
+                  <span class="cf-compact-format-tag">2D</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Mad Max: Fury Road</div>
+                <div class="cf-compact-genres">Action • Adventure • Sci-Fi</div>
+                <div class="cf-compact-duration">2h 00m</div>
+              </div>
+            </a>
+
+          </div>
+        </section>
+
+        <!-- 3. Section: Trending Now -->
+        <section class="cf-dash-section">
+          <div class="cf-dash-section-header">
+            <div>
+              <div class="cf-dash-section-title-wrap">
+                <span>🔥</span>
+                <h2 class="cf-dash-section-title">Trending Now</h2>
+              </div>
+              <p class="cf-dash-section-sub">Most watched, most loved, right now</p>
+            </div>
+            <a href="discover.html" class="cf-dash-view-all">View All →</a>
+          </div>
+
+          <!-- 6-Card Compact Rail -->
+          <div class="cf-cards-carousel-rail" id="rail-trending-now">
+            
+            <!-- Trending 1: Bad Boys -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Bad Boys: Ride or Die" data-genres="Action, Comedy, Crime">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_badboys.jpg" alt="Bad Boys" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge dim">2D</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>7.0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Bad Boys: Ride or Die</div>
+                <div class="cf-compact-genres">Action • Comedy • Crime</div>
+                <div class="cf-compact-duration">2h 04m</div>
+              </div>
+            </a>
+
+            <!-- Trending 2: Kingdom of Planet -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Kingdom of the Planet of the Apes" data-genres="Action, Adventure, Sci-Fi">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_apes.jpg" alt="Kingdom of Planet" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left">IMAX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>7.3</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Kingdom of the Planet...</div>
+                <div class="cf-compact-genres">Action • Adventure • Sci-Fi</div>
+                <div class="cf-compact-duration">2h 25m</div>
+              </div>
+            </a>
+
+            <!-- Trending 3: Furiosa -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Furiosa: A Mad Max Saga" data-genres="Action, Adventure, Sci-Fi">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_furiosa.jpg" alt="Furiosa" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3);">4DX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>7.8</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Furiosa: Mad Max</div>
+                <div class="cf-compact-genres">Action • Adventure • Sci-Fi</div>
+                <div class="cf-compact-duration">2h 28m</div>
+              </div>
+            </a>
+
+            <!-- Trending 4: The Garfield Movie -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="The Garfield Movie" data-genres="Animation, Comedy, Family">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_garfield.jpg" alt="The Garfield Movie" class="cf-compact-poster-img" loading="lazy">
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>6.1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">The Garfield Movie</div>
+                <div class="cf-compact-genres">Animation • Comedy • Family</div>
+                <div class="cf-compact-duration">1h 41m</div>
+              </div>
+            </a>
+
+            <!-- Trending 5: Gladiator II -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Gladiator II" data-genres="Action, Drama, History">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_gladiator2.jpg" alt="Gladiator II" class="cf-compact-poster-img" loading="lazy">
+                <span class="cf-poster-top-badge left">IMAX</span>
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>7.2</span>
+                  </div>
+                  <span class="cf-compact-format-tag">2D</span>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Gladiator II</div>
+                <div class="cf-compact-genres">Action • Drama • History</div>
+                <div class="cf-compact-duration">2h 28m</div>
+              </div>
+            </a>
+
+            <!-- Trending 6: Twisters -->
+            <a href="design-system.html#seat-section" class="cf-compact-movie-card" data-title="Twisters" data-genres="Action, Adventure, Thriller">
+              <div class="cf-compact-poster-box">
+                <img src="images/poster_twisters.jpg" alt="Twisters" class="cf-compact-poster-img" loading="lazy">
+                <div class="cf-poster-bottom-bar">
+                  <div class="cf-compact-rating">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>6.6</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cf-compact-details">
+                <div class="cf-compact-title">Twisters</div>
+                <div class="cf-compact-genres">Action • Adventure • Thriller</div>
+                <div class="cf-compact-duration">2h 02m</div>
+              </div>
+            </a>
+
+          </div>
+        </section>
+
+        <!-- 4. Section: Cinemas Near You (4 Horizontal Cards) -->
+        <section class="cf-dash-section" id="cinemas-near-you">
+          <div class="cf-dash-section-header">
+            <div>
+              <div class="cf-dash-section-title-wrap">
+                <span>📍</span>
+                <h2 class="cf-dash-section-title">Cinemas Near You</h2>
+              </div>
+              <p class="cf-dash-section-sub">Find the best theatres near you</p>
+            </div>
+            <a href="discover.html" class="cf-dash-view-all">View All →</a>
+          </div>
+
+          <div class="cf-theatres-dash-grid">
+            
+            <!-- Theatre 1: PVR Orion Mall -->
+            <a href="discover.html" class="cf-dash-theatre-card">
+              <img src="images/theatre_orion.jpg" alt="PVR Orion" class="cf-dash-theatre-thumb">
+              <div class="cf-dash-theatre-info">
+                <div class="cf-dash-theatre-name">PVR Orion Mall</div>
+                <div class="cf-dash-theatre-dist">3.2 km • MG Road, Bengaluru</div>
+                <div class="cf-dash-theatre-formats">
+                  <span class="cf-dash-fmt-pill">IMAX</span>
+                  <span class="cf-dash-fmt-pill">4DX</span>
+                  <span class="cf-dash-fmt-pill">3D</span>
+                  <span class="cf-dash-fmt-pill" style="color: #94A3B8;">2D</span>
+                </div>
+              </div>
+              <div class="cf-dash-theatre-arrow">›</div>
+            </a>
+
+            <!-- Theatre 2: INOX Garuda Mall -->
+            <a href="discover.html" class="cf-dash-theatre-card">
+              <img src="images/theatre_garuda.jpg" alt="INOX Garuda" class="cf-dash-theatre-thumb">
+              <div class="cf-dash-theatre-info">
+                <div class="cf-dash-theatre-name">INOX Garuda Mall</div>
+                <div class="cf-dash-theatre-dist">5.4 km • Yelahanka, Bengaluru</div>
+                <div class="cf-dash-theatre-formats">
+                  <span class="cf-dash-fmt-pill">IMAX</span>
+                  <span class="cf-dash-fmt-pill">4DX</span>
+                  <span class="cf-dash-fmt-pill">3D</span>
+                  <span class="cf-dash-fmt-pill" style="color: #94A3B8;">2D</span>
+                </div>
+              </div>
+              <div class="cf-dash-theatre-arrow">›</div>
+            </a>
+
+            <!-- Theatre 3: PVR Forum Mall -->
+            <a href="discover.html" class="cf-dash-theatre-card">
+              <img src="images/theatre_forum.jpg" alt="PVR Forum" class="cf-dash-theatre-thumb">
+              <div class="cf-dash-theatre-info">
+                <div class="cf-dash-theatre-name">PVR Forum Mall</div>
+                <div class="cf-dash-theatre-dist">6.8 km • Koramangala, Bengaluru</div>
+                <div class="cf-dash-theatre-formats">
+                  <span class="cf-dash-fmt-pill">IMAX</span>
+                  <span class="cf-dash-fmt-pill">4DX</span>
+                  <span class="cf-dash-fmt-pill">3D</span>
+                  <span class="cf-dash-fmt-pill" style="color: #94A3B8;">2D</span>
+                </div>
+              </div>
+              <div class="cf-dash-theatre-arrow">›</div>
+            </a>
+
+            <!-- Theatre 4: Cinepolis Royal Meenakshi -->
+            <a href="discover.html" class="cf-dash-theatre-card">
+              <img src="images/theatre_meenakshi.jpg" alt="Cinepolis Meenakshi" class="cf-dash-theatre-thumb">
+              <div class="cf-dash-theatre-info">
+                <div class="cf-dash-theatre-name">Cinepolis Royal Meenakshi</div>
+                <div class="cf-dash-theatre-dist">8.1 km • Jayanagar, Bengaluru</div>
+                <div class="cf-dash-theatre-formats">
+                  <span class="cf-dash-fmt-pill">IMAX</span>
+                  <span class="cf-dash-fmt-pill">3D</span>
+                  <span class="cf-dash-fmt-pill" style="color: #94A3B8;">2D</span>
+                </div>
+              </div>
+              <div class="cf-dash-theatre-arrow">›</div>
+            </a>
+
+          </div>
+        </section>
+
+      </div><!-- End Main Column -->
+
+
+      <!-- ======================================================================
+           RIGHT COLUMN: Discovery Panel & Curated Widgets (~28%)
+           ====================================================================== -->
+      <aside class="cf-discovery-sidebar">
+
+        <!-- 1. "What should I watch?" Interactive Panel -->
+        <div class="cf-side-discover-card" id="side-discovery-widget">
+          
+          <div class="cf-side-discover-header">
+            <div class="cf-side-discover-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            </div>
+            <div>
+              <h3 class="cf-side-discover-title">What should I watch?</h3>
+              <p class="cf-side-discover-sub">Tell us your mood, preferences and we'll find the perfect movie for you!</p>
+            </div>
+            <button class="cf-side-discover-close" onclick="cfToast.info('You can minimize or expand the discovery card at any time.', 'Discovery Mode')" aria-label="Toggle">×</button>
+          </div>
+
+          <!-- 1. What's your mood today? -->
+          <div class="cf-side-group">
+            <div class="cf-side-group-label">1. What's your mood today?</div>
+            <div class="cf-mood-chips-row">
+              <button class="cf-mood-chip is-selected" data-mood="Action" type="button">
+                <svg viewBox="0 0 24 24"><path d="M14.5 2.5l7 7-8.5 8.5-7-7 8.5-8.5zm-5 13l-4 4 1.5 1.5 4-4-1.5-1.5z"/></svg>
+                <span>Action</span>
+              </button>
+              <button class="cf-mood-chip" data-mood="Comedy" type="button">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+                <span>Comedy</span>
+              </button>
+              <button class="cf-mood-chip" data-mood="Romance" type="button">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Romance</span>
+              </button>
+              <button class="cf-mood-chip" data-mood="Thriller" type="button">
+                <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.84 7.67 6.69 8.69L12 22l2.31-2.31C18.16 18.67 21 15.17 21 11a9 9 0 0 0-9-9zm-2 14.5v-2h4v2h-4zm0-4v-5h4v5h-4z"/></svg>
+                <span>Thriller</span>
+              </button>
+              <button class="cf-mood-chip" data-mood="Drama" type="button">
+                <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                <span>Drama</span>
+              </button>
+              <button class="cf-mood-chip" data-mood="Sci-Fi" type="button">
+                <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18h-2v1.93A8 8 0 0 1 4.07 13H6v-2H4.07A8 8 0 0 1 11 4.07V6h2V4.07A8 8 0 0 1 19.93 11H18v2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+                <span>Sci-Fi</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Choose your preferences -->
+          <div class="cf-side-group">
+            <div class="cf-side-group-label">2. Choose your preferences</div>
+            <div class="cf-pref-cards-row">
+              <div class="cf-side-pref-box" id="box-genre" title="Click to cycle genre">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                  <span>Genre</span>
+                </div>
+                <div class="cf-pref-box-val">All Genres</div>
+              </div>
+
+              <div class="cf-side-pref-box" id="box-lang" title="Click to cycle language">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                  <span>Language</span>
+                </div>
+                <div class="cf-pref-box-val">English</div>
+              </div>
+
+              <div class="cf-side-pref-box" id="box-format" title="Click to cycle format">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                  <span>Format</span>
+                </div>
+                <div class="cf-pref-box-val">IMAX | 3D | 2D</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Your theatre experience -->
+          <div class="cf-side-group">
+            <div class="cf-side-group-label">3. Your theatre experience</div>
+            <div class="cf-pref-cards-row">
+              <div class="cf-side-pref-box" id="box-theatre-type" title="Click to cycle theatre brand">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>Theatre Type</span>
+                </div>
+                <div class="cf-pref-box-val">PVR / INOX / Others</div>
+              </div>
+
+              <div class="cf-side-pref-box" id="box-comfort" title="Click to cycle comfort">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M4 18v3h3v-3h10v3h3v-3h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1z"/></svg>
+                  <span>Comfort</span>
+                </div>
+                <div class="cf-pref-box-val">Standard</div>
+              </div>
+
+              <div class="cf-side-pref-box" id="box-food" title="Click to cycle dining">
+                <div class="cf-pref-box-top">
+                  <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                  <span>Food &amp; Drinks</span>
+                </div>
+                <div class="cf-pref-box-val">Popcorn + Drinks</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Additional Options: Switches & Distance -->
+          <div class="cf-side-group">
+            <div class="cf-side-group-label">4. Additional Options</div>
+            
+            <div class="cf-toggles-row">
+              <label class="cf-toggle-item">
+                <span class="cf-switch">
+                  <input type="checkbox" id="toggle-subtitles" checked>
+                  <span class="cf-slider-round"></span>
+                </span>
+                <span>With Subtitles</span>
+              </label>
+
+              <label class="cf-toggle-item">
+                <span class="cf-switch">
+                  <input type="checkbox" id="toggle-nearby">
+                  <span class="cf-slider-round"></span>
+                </span>
+                <span>Show only nearby</span>
+              </label>
+            </div>
+
+            <!-- Travel Distance Slider -->
+            <div class="cf-side-slider-box">
+              <div class="cf-side-slider-meta">
+                <span>Max Travel Distance</span>
+                <span class="cf-side-slider-val" id="side-distance-val">10 km</span>
+              </div>
+              <input type="range" class="cf-side-range" id="side-distance-slider" min="2" max="30" value="10">
+            </div>
+
+            <!-- Date & Time Button -->
+            <button class="cf-side-date-btn" id="side-date-btn" type="button">
+              <span>📅 Today, Any Time</span>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+            </button>
+
+            <!-- Find My Movie CTA Button -->
+            <button class="cf-btn-find-exp" id="side-find-btn" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <span>Find My Movie</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 2. "Personalized for You" Card -->
+        <div class="cf-card-personalized">
+          <div class="cf-pers-header">
+            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <span>Personalized for You</span>
+          </div>
+          <p class="cf-pers-sub">Based on your interests and watch history</p>
+
+          <div class="cf-pers-content-row">
+            <img src="images/poster_interstellar.jpg" alt="Interstellar" class="cf-pers-poster-thumb">
+            <div class="cf-pers-info">
+              <span class="cf-pers-match-pill">98% Match</span>
+              <div class="cf-pers-title">Interstellar</div>
+              <div class="cf-pers-genres">Sci-Fi • Drama • Adventure</div>
+              <div class="cf-pers-meta">2h 49m • 4.2 km away</div>
+              <a href="design-system.html#seat-section" class="cf-btn-pers-showtimes">View Showtimes</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. "Premium Experiences" Visual Card -->
+        <div class="cf-card-prem-exp">
+          <img src="images/premium_auditorium.jpg" alt="Luxury Cinema" class="cf-prem-bg-img">
+          <div class="cf-prem-content">
+            <div>
+              <div class="cf-prem-title">Premium Experiences</div>
+              <div class="cf-prem-fmts">IMAX • 4DX • Dolby Atmos • ScreenX</div>
+            </div>
+            <a href="discover.html" class="cf-prem-btn">Explore Now →</a>
+          </div>
+        </div>
+
+        <!-- 4. "Your Watchlist" Card -->
+        <div class="cf-card-watchlist">
+          <div class="cf-watch-header">
+            <div class="cf-watch-title-wrap">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span>Your Watchlist</span>
+            </div>
+            <a href="discover.html" class="caption text-muted" style="text-decoration: none;">See all →</a>
+          </div>
+
+          <div class="cf-watch-grid">
+            <div class="cf-watch-thumb-item">
+              <img src="images/poster_dune2.jpg" alt="Dune 2" class="cf-watch-thumb-img">
+              <div class="cf-watch-heart-overlay"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+            </div>
+            <div class="cf-watch-thumb-item">
+              <img src="images/poster_oppenheimer.jpg" alt="Oppenheimer" class="cf-watch-thumb-img">
+              <div class="cf-watch-heart-overlay"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+            </div>
+            <div class="cf-watch-thumb-item">
+              <img src="images/poster_batman.jpg" alt="The Batman" class="cf-watch-thumb-img">
+              <div class="cf-watch-heart-overlay"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+      </aside><!-- End Right Column -->
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       City Selection Modal Dialog (Visual Landmark Target)
+       ========================================================================== -->
+  <div class="cf-modal-backdrop" id="city-modal">
+    <div class="cf-modal cf-modal-city-picker" role="dialog" aria-modal="true" aria-labelledby="city-modal-title">
+      <div class="cf-modal-header">
+        <div>
+          <h3 class="cf-modal-city-title" id="city-modal-title">Select Your City</h3>
+          <p class="cf-modal-city-sub">Choose where you want to watch</p>
+        </div>
+        <button class="cf-modal-close" data-modal-close aria-label="Close dialog">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="cf-modal-body" style="padding: 16px 22px;">
+        <div class="cf-city-search-box">
+          <svg viewBox="0 0 24 24" class="cf-city-search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="city-search-input" class="cf-city-search-input" placeholder="Search your city or region..." aria-label="Search city or region">
+        </div>
+
+        <div class="cf-city-section-heading">POPULAR CITIES</div>
+        
+        <div class="cf-city-grid" id="city-selection-list">
+          
+          <!-- City 1: Bengaluru -->
+          <button class="cf-city-card is-active" data-city-id="bengaluru" data-city-name="Bengaluru" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_bengaluru.jpg" alt="Bengaluru Landmark" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Bengaluru</span>
+              <span class="cf-city-card-state">Karnataka</span>
+            </div>
+          </button>
+
+          <!-- City 2: Mumbai -->
+          <button class="cf-city-card" data-city-id="mumbai" data-city-name="Mumbai" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_mumbai.jpg" alt="Mumbai Gateway of India" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Mumbai</span>
+              <span class="cf-city-card-state">Maharashtra</span>
+            </div>
+          </button>
+
+          <!-- City 3: Delhi NCR -->
+          <button class="cf-city-card" data-city-id="delhi" data-city-name="Delhi NCR" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_delhi.jpg" alt="Delhi India Gate" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Delhi NCR</span>
+              <span class="cf-city-card-state">National Capital Region</span>
+            </div>
+          </button>
+
+          <!-- City 4: Hyderabad -->
+          <button class="cf-city-card" data-city-id="hyderabad" data-city-name="Hyderabad" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_hyderabad.jpg" alt="Hyderabad Charminar" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Hyderabad</span>
+              <span class="cf-city-card-state">Telangana</span>
+            </div>
+          </button>
+
+          <!-- City 5: Chennai -->
+          <button class="cf-city-card" data-city-id="chennai" data-city-name="Chennai" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_chennai.jpg" alt="Chennai Central Landmark" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Chennai</span>
+              <span class="cf-city-card-state">Tamil Nadu</span>
+            </div>
+          </button>
+
+          <!-- City 6: Pune -->
+          <button class="cf-city-card" data-city-id="pune" data-city-name="Pune" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_pune.jpg" alt="Pune Shaniwar Wada" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Pune</span>
+              <span class="cf-city-card-state">Maharashtra</span>
+            </div>
+          </button>
+
+          <!-- City 7: Kolkata -->
+          <button class="cf-city-card" data-city-id="kolkata" data-city-name="Kolkata" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_kolkata.jpg" alt="Kolkata Howrah Bridge" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Kolkata</span>
+              <span class="cf-city-card-state">West Bengal</span>
+            </div>
+          </button>
+
+          <!-- City 8: Ahmedabad -->
+          <button class="cf-city-card" data-city-id="ahmedabad" data-city-name="Ahmedabad" type="button">
+            <div class="cf-city-card-img-wrap">
+              <img src="images/city_ahmedabad.jpg" alt="Ahmedabad Landmark" class="cf-city-card-img" loading="lazy">
+              <div class="cf-city-check-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <div class="cf-city-card-content">
+              <span class="cf-city-card-name">Ahmedabad</span>
+              <span class="cf-city-card-state">Gujarat</span>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="cf-modal-footer" style="padding: 12px 22px; justify-content: space-between;">
+        <span class="cf-modal-footer-note">📍 Showing screens &amp; showtimes for selected city</span>
+        <button class="cf-btn cf-btn-ghost" data-modal-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="cf-footer" style="margin-top: var(--cf-space-10);">
+    <div class="cf-dashboard-container cf-flex cf-justify-between cf-items-center cf-flex-wrap cf-gap-4">
+      <div class="cf-header-brand">
+        <div class="cf-header-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <span>Cinema<span class="text-vermilion">Flow</span></span>
+      </div>
+      <div class="caption text-muted">
+        CinemaFlow © 2026. Built with Java, Spring Boot, MySQL, Thymeleaf &amp; Vanilla CSS. Premium Cinema Destination.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript Modules -->
+  <script src="js/core/toast.js"></script>
+  <script src="js/core/modal.js"></script>
+  <script src="js/core/api-client.js"></script>
+  <script src="js/pages/home.js"></script>
+</body>
+</html>

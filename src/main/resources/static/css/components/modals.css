@@ -1,0 +1,110 @@
+/**
+ * CinemaFlow Modal Dialog Component
+ */
+
+.cf-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(5, 7, 10, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: var(--cf-z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cf-space-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--cf-transition-normal), visibility var(--cf-transition-normal);
+}
+
+.cf-modal-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cf-modal {
+  background-color: var(--cf-bg-surface);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-lg);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--cf-shadow-xl);
+  transform: scale(0.95) translateY(8px);
+  transition: transform var(--cf-transition-smooth);
+  overflow: hidden;
+  z-index: var(--cf-z-modal);
+}
+
+.cf-modal-backdrop.is-open .cf-modal {
+  transform: scale(1) translateY(0);
+}
+
+.cf-modal-header {
+  padding: var(--cf-space-5) var(--cf-space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--cf-border-subtle);
+}
+
+.cf-modal-title {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-xl);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+}
+
+.cf-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--cf-radius-sm);
+  color: var(--cf-text-muted);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-modal-close:hover {
+  background-color: var(--cf-bg-surface-elevated);
+  color: var(--cf-text-primary);
+}
+
+.cf-modal-close svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.cf-modal-body {
+  padding: var(--cf-space-6);
+  overflow-y: auto;
+  color: var(--cf-text-secondary);
+  font-size: var(--cf-font-size-sm);
+}
+
+.cf-modal-footer {
+  padding: var(--cf-space-4) var(--cf-space-6);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--cf-space-3);
+  border-top: 1px solid var(--cf-border-subtle);
+  background-color: var(--cf-bg-surface-elevated);
+}
+
+@media (max-width: 576px) {
+  .cf-modal {
+    max-width: 100%;
+    margin-top: auto;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

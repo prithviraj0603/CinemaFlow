@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${pageTitle != null ? pageTitle + ' — CinemaFlow' : 'CinemaFlow — Curated Movie Discovery & Ticket Booking'}">CinemaFlow</title>
+  <meta name="description" content="Discover movies in theatres near you. Filter by genre, format (IMAX, 4DX, 3D), language, and showtimes with CinemaFlow.">
+
+  <!-- CSRF Protection Meta Tags for Spring Security -->
+  <meta name="_csrf" th:content="${_csrf?.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" th:href="@{/css/cinema-flow.css}">
+  <th:block th:replace="${customStyles} ?: ~{}"></th:block>
+</head>
+<body>
+
+  <!-- Global Header -->
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <!-- Main Body Content -->
+  <main class="cf-container" th:insert="${content}">
+    <!-- Injected Page Content -->
+  </main>
+
+  <!-- Global Footer -->
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <!-- Core Scripts -->
+  <script th:src="@{/js/core/toast.js}"></script>
+  <script th:src="@{/js/core/modal.js}"></script>
+  <script th:src="@{/js/core/api-client.js}"></script>
+  <th:block th:replace="${customScripts} ?: ~{}"></th:block>
+</body>
+</html>

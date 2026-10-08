@@ -1,0 +1,1095 @@
+/**
+ * CinemaFlow — "What Should I Watch?" Immersive Discovery Stylesheet
+ * High-end cinematic visual language, layered ambient backdrops,
+ * progressive 3-step wizard, interactive experience cards, summary blueprint,
+ * dual-visual theatre + poster result cards, and deterministic match ranking.
+ */
+
+/* ==========================================================================
+   Atmospheric Layered Background & Container (1360px Desktop Canvas)
+   ========================================================================== */
+.cf-discover-page {
+  position: relative;
+  min-height: calc(100vh - var(--cf-header-height));
+  background-color: var(--cf-bg-base);
+  overflow-x: hidden;
+  padding-bottom: var(--cf-space-16);
+}
+
+/* Ambient Cinematic Beams & Atmospheric Vignette */
+.cf-discover-ambient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cf-ambient-beam-red {
+  position: absolute;
+  top: -15%;
+  right: -5%;
+  width: 750px;
+  height: 750px;
+  background: radial-gradient(circle, rgba(255, 51, 75, 0.14) 0%, rgba(255, 51, 75, 0.03) 50%, transparent 70%);
+  filter: blur(80px);
+  animation: cf-ambient-pulse 12s infinite alternate ease-in-out;
+}
+
+.cf-ambient-beam-cyan {
+  position: absolute;
+  bottom: 5%;
+  left: -8%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.10) 0%, rgba(0, 210, 255, 0.02) 50%, transparent 70%);
+  filter: blur(90px);
+  animation: cf-ambient-pulse 15s infinite alternate-reverse ease-in-out;
+}
+
+.cf-ambient-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.7;
+}
+
+@keyframes cf-ambient-pulse {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+  100% { transform: scale(1.18) translate(-30px, 25px); opacity: 1; }
+}
+
+/* Wider 1360px container optimized for 1920x1080 */
+.cf-discover-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: var(--cf-space-8) var(--cf-space-6);
+}
+
+/* ==========================================================================
+   Top Stepper / Progress Header
+   ========================================================================== */
+.cf-stepper-header {
+  text-align: center;
+  margin-bottom: var(--cf-space-8);
+}
+
+.cf-stepper-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  padding: 0.4rem 1rem;
+  background-color: var(--cf-accent-primary-subtle);
+  border: 1px solid var(--cf-border-accent);
+  border-radius: var(--cf-radius-full);
+  font-family: var(--cf-font-display);
+  font-weight: var(--cf-weight-bold);
+  font-size: var(--cf-font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cf-accent-primary);
+  margin-bottom: var(--cf-space-3);
+  box-shadow: 0 0 18px rgba(255, 51, 75, 0.22);
+}
+
+.cf-stepper-title {
+  font-family: var(--cf-font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: var(--cf-weight-extrabold);
+  letter-spacing: -0.03em;
+  color: var(--cf-text-primary);
+  line-height: 1.15;
+  margin-bottom: var(--cf-space-2);
+}
+
+.cf-stepper-subtitle {
+  font-size: var(--cf-font-size-base);
+  color: var(--cf-text-secondary);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Progress Track Bar */
+.cf-progress-track-wrap {
+  max-width: 620px;
+  margin: var(--cf-space-6) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.cf-progress-steps-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.cf-progress-step-label {
+  color: var(--cf-text-muted);
+  transition: color var(--cf-transition-fast);
+}
+
+.cf-progress-step-label.is-active {
+  color: var(--cf-accent-primary);
+  font-weight: var(--cf-weight-bold);
+}
+
+.cf-progress-step-label.is-complete {
+  color: var(--cf-status-success);
+}
+
+.cf-progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background-color: var(--cf-bg-surface-elevated);
+  border-radius: var(--cf-radius-full);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--cf-border-subtle);
+}
+
+.cf-progress-bar-fill {
+  height: 100%;
+  width: 33.33%;
+  background: linear-gradient(90deg, var(--cf-accent-primary) 0%, var(--cf-accent-gold) 100%);
+  border-radius: var(--cf-radius-full);
+  transition: width var(--cf-transition-smooth);
+  box-shadow: 0 0 14px var(--cf-accent-primary-glow);
+}
+
+/* ==========================================================================
+   Step Containers & Transitions
+   ========================================================================== */
+.cf-wizard-step {
+  display: none;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--cf-transition-normal), transform var(--cf-transition-normal);
+}
+
+.cf-wizard-step.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Step Glass Container */
+.cf-step-card-glass {
+  background: linear-gradient(135deg, rgba(19, 24, 36, 0.88) 0%, rgba(14, 18, 28, 0.94) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-xl);
+  padding: var(--cf-space-8);
+  box-shadow: var(--cf-shadow-xl);
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .cf-step-card-glass {
+    padding: var(--cf-space-5) var(--cf-space-4);
+  }
+}
+
+/* Secondary Skip / Quick Action Pills */
+.cf-skip-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cf-border-subtle);
+  border-radius: var(--cf-radius-full);
+  color: var(--cf-text-secondary);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-semibold);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-skip-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--cf-border-medium);
+  color: var(--cf-text-primary);
+  transform: translateY(-1px);
+}
+
+.cf-skip-action-btn.is-selected {
+  background: var(--cf-accent-gold-subtle);
+  border-color: var(--cf-accent-gold);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   STEP 1: Location & Photographic City Cards
+   ========================================================================== */
+.cf-location-header-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-4);
+  margin-bottom: var(--cf-space-6);
+  flex-wrap: wrap;
+}
+
+/* Auto-detect Location Card */
+.cf-gps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  padding: 0.85rem 1.4rem;
+  background: linear-gradient(135deg, rgba(255, 51, 75, 0.15) 0%, rgba(19, 23, 34, 0.95) 100%);
+  border: 1px solid var(--cf-border-accent);
+  border-radius: var(--cf-radius-md);
+  color: var(--cf-text-primary);
+  font-family: var(--cf-font-display);
+  font-weight: var(--cf-weight-bold);
+  font-size: var(--cf-font-size-sm);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+  box-shadow: 0 4px 16px rgba(255, 51, 75, 0.18);
+}
+
+.cf-gps-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 51, 75, 0.25) 0%, rgba(27, 33, 50, 0.98) 100%);
+  border-color: var(--cf-accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px var(--cf-accent-primary-glow);
+}
+
+.cf-gps-beacon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+
+.cf-gps-beacon-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--cf-accent-primary);
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+}
+
+.cf-gps-beacon-ring {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cf-accent-primary);
+  border-radius: 50%;
+  animation: cf-beacon-ping 1.6s infinite cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes cf-beacon-ping {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Featured City Cards Grid with Photographic Backdrops */
+.cf-cities-interactive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--cf-space-4);
+  margin-top: var(--cf-space-4);
+}
+
+.cf-city-exp-card {
+  position: relative;
+  background-color: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-lg);
+  padding: var(--cf-space-5);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  overflow: hidden;
+}
+
+.cf-city-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  z-index: 1;
+}
+
+.cf-city-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(14, 18, 28, 0.5) 0%, rgba(11, 13, 19, 0.95) 100%);
+  z-index: 2;
+}
+
+.cf-city-card-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.cf-city-exp-card:hover {
+  border-color: var(--cf-border-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--cf-shadow-lg);
+}
+
+.cf-city-exp-card:hover .cf-city-card-bg {
+  opacity: 0.42;
+  transform: scale(1.05);
+}
+
+.cf-city-exp-card.is-selected {
+  border-color: var(--cf-accent-primary);
+  box-shadow: 0 0 20px rgba(255, 51, 75, 0.3);
+}
+
+.cf-city-exp-card.is-selected .cf-city-card-bg {
+  opacity: 0.45;
+}
+
+.cf-city-exp-card.is-selected::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cf-accent-primary);
+  z-index: 4;
+}
+
+.cf-city-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-city-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--cf-radius-sm);
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cf-text-secondary);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-city-exp-card.is-selected .cf-city-icon-badge {
+  background-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+}
+
+.cf-city-name-lg {
+  font-family: var(--cf-font-display);
+  font-size: 1.25rem;
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+}
+
+.cf-city-theatres-count {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+  margin-top: 3px;
+}
+
+.cf-city-check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cf-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 0.75rem;
+  font-weight: var(--cf-weight-bold);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-city-exp-card.is-selected .cf-city-check-icon {
+  background-color: var(--cf-accent-primary);
+  border-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   STEP 2: Screen & Experience Visual Cards (7 Distinct Formats)
+   ========================================================================== */
+.cf-screen-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: var(--cf-space-4);
+}
+
+.cf-screen-card {
+  position: relative;
+  background: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-lg);
+  padding: var(--cf-space-5);
+  cursor: pointer;
+  transition: all var(--cf-transition-normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.cf-screen-card-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.cf-screen-card:hover .cf-screen-card-shine {
+  left: 100%;
+}
+
+.cf-screen-card:hover {
+  border-color: var(--cf-border-strong);
+  background: var(--cf-bg-surface-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--cf-shadow-lg);
+}
+
+.cf-screen-card.is-selected {
+  border-color: var(--cf-accent-primary);
+  background: linear-gradient(135deg, rgba(255, 51, 75, 0.16) 0%, rgba(27, 33, 50, 0.95) 100%);
+  box-shadow: 0 4px 22px rgba(255, 51, 75, 0.28);
+}
+
+.cf-screen-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-screen-badge-label {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-lg);
+  font-weight: var(--cf-weight-extrabold);
+  color: var(--cf-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+}
+
+.cf-screen-desc {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+  line-height: 1.55;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-screen-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--cf-space-3);
+  border-top: 1px solid var(--cf-border-subtle);
+}
+
+.cf-screen-spec {
+  font-size: 0.72rem;
+  font-family: var(--cf-font-mono);
+  color: var(--cf-accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cf-checkbox-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--cf-radius-xs);
+  border: 1.5px solid var(--cf-border-strong);
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 0.8rem;
+  font-weight: var(--cf-weight-bold);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-screen-card.is-selected .cf-checkbox-indicator {
+  background-color: var(--cf-accent-primary);
+  border-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   STEP 3: Personalize The Experience (Split Layout for 1920x1080)
+   ========================================================================== */
+.cf-personalize-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--cf-space-8);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .cf-personalize-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cf-pref-group {
+  margin-bottom: var(--cf-space-6);
+  padding-bottom: var(--cf-space-6);
+  border-bottom: 1px solid var(--cf-border-subtle);
+}
+
+.cf-pref-group:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.cf-pref-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-pref-group-title {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-base);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+}
+
+.cf-pref-group-title svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--cf-accent-gold);
+}
+
+.cf-pref-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-2);
+}
+
+.cf-choice-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  padding: 0.55rem 1.15rem;
+  background-color: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-full);
+  color: var(--cf-text-secondary);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-medium);
+  cursor: pointer;
+  transition: all var(--cf-transition-fast);
+  user-select: none;
+}
+
+.cf-choice-pill:hover {
+  border-color: var(--cf-border-strong);
+  color: var(--cf-text-primary);
+  background-color: var(--cf-bg-surface-hover);
+  transform: translateY(-1px);
+}
+
+.cf-choice-pill.is-selected {
+  background-color: var(--cf-accent-primary-subtle);
+  border-color: var(--cf-accent-primary);
+  color: #FFFFFF;
+  font-weight: var(--cf-weight-semibold);
+  box-shadow: 0 0 12px rgba(255, 51, 75, 0.28);
+}
+
+/* Distance Visual Slider */
+.cf-distance-slider-box {
+  background-color: var(--cf-bg-surface-elevated);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-md);
+  padding: var(--cf-space-5);
+  margin-top: var(--cf-space-3);
+}
+
+.cf-distance-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-distance-badge-lg {
+  font-family: var(--cf-font-mono);
+  font-size: 1.15rem;
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-accent-primary);
+  background: var(--cf-accent-primary-subtle);
+  border: 1px solid var(--cf-border-accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--cf-radius-sm);
+}
+
+/* ==========================================================================
+   Bottom Action Toolbar (Back / Continue / Skip)
+   ========================================================================== */
+.cf-wizard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--cf-space-8);
+  padding-top: var(--cf-space-6);
+  border-top: 1px solid var(--cf-border-subtle);
+  flex-wrap: wrap;
+  gap: var(--cf-space-4);
+}
+
+.cf-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+}
+
+.cf-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+}
+
+/* ==========================================================================
+   FINAL SUMMARY: "Your Movie Night" Blueprint Card (Integrated)
+   ========================================================================== */
+.cf-summary-card {
+  background: linear-gradient(135deg, rgba(23, 29, 44, 0.95) 0%, rgba(14, 18, 27, 0.98) 100%);
+  border: 1px solid rgba(255, 51, 75, 0.4);
+  border-radius: var(--cf-radius-xl);
+  padding: var(--cf-space-6);
+  box-shadow: 0 8px 32px rgba(255, 51, 75, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.cf-summary-card.is-sticky {
+  position: sticky;
+  top: 90px;
+}
+
+.cf-summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--cf-accent-primary), var(--cf-accent-gold), var(--cf-accent-cyan));
+}
+
+.cf-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--cf-space-3);
+  margin: var(--cf-space-5) 0 var(--cf-space-6);
+}
+
+.cf-summary-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cf-border-subtle);
+  border-radius: var(--cf-radius-md);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  transition: all var(--cf-transition-fast);
+}
+
+.cf-summary-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--cf-border-medium);
+  transform: translateX(2px);
+}
+
+.cf-summary-emoji {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.cf-summary-label {
+  font-size: 0.7rem;
+  color: var(--cf-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cf-summary-val {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-text-primary);
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   DISCOVERY RESULTS: High-Density Dual-Visual Experience Cards
+   ========================================================================== */
+.cf-results-section {
+  display: none;
+  animation: cf-fade-in 0.4s ease;
+  margin-top: var(--cf-space-8);
+}
+
+.cf-results-section.is-active {
+  display: block;
+}
+
+@keyframes cf-fade-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cf-results-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--cf-space-6);
+  flex-wrap: wrap;
+  gap: var(--cf-space-4);
+  padding-bottom: var(--cf-space-4);
+  border-bottom: 1px solid var(--cf-border-subtle);
+}
+
+/* Rich Dual-Visual Experience Card (Poster + Theatre Auditorium) */
+.cf-experience-card {
+  background: linear-gradient(135deg, rgba(20, 25, 38, 0.95) 0%, rgba(13, 16, 24, 0.98) 100%);
+  border: 1px solid var(--cf-border-medium);
+  border-radius: var(--cf-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--cf-space-6);
+  transition: all var(--cf-transition-normal);
+  display: grid;
+  grid-template-columns: 190px 280px 1fr;
+  position: relative;
+}
+
+.cf-experience-card:hover {
+  border-color: var(--cf-border-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 51, 75, 0.15);
+}
+
+/* Column 1: Movie Poster */
+.cf-exp-poster-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 290px;
+  background-color: var(--cf-bg-surface);
+  overflow: hidden;
+}
+
+.cf-exp-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.cf-experience-card:hover .cf-exp-poster-img {
+  transform: scale(1.03);
+}
+
+.cf-poster-rating-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 0.65rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.92) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Column 2: Theatre Auditorium Visual */
+.cf-exp-theatre-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 290px;
+  background-color: #0E121D;
+  overflow: hidden;
+  border-right: 1px solid var(--cf-border-subtle);
+}
+
+.cf-exp-theatre-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.78;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.cf-experience-card:hover .cf-exp-theatre-img {
+  opacity: 0.92;
+  transform: scale(1.03);
+}
+
+.cf-theatre-overlay-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 65%, rgba(13, 16, 24, 0.95) 100%),
+              linear-gradient(180deg, rgba(13, 16, 24, 0.4) 0%, rgba(13, 16, 24, 0.85) 100%);
+  pointer-events: none;
+}
+
+.cf-theatre-badge-pill {
+  position: absolute;
+  top: var(--cf-space-3);
+  left: var(--cf-space-3);
+  padding: 0.3rem 0.65rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--cf-radius-sm);
+  font-family: var(--cf-font-display);
+  font-size: 0.68rem;
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+.cf-theatre-loc-pill {
+  position: absolute;
+  bottom: var(--cf-space-3);
+  left: var(--cf-space-3);
+  padding: 0.3rem 0.65rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--cf-radius-sm);
+  font-size: 0.72rem;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 2;
+}
+
+/* Column 3: Experience Content Deck */
+.cf-exp-content {
+  padding: var(--cf-space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cf-exp-top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cf-space-4);
+  margin-bottom: var(--cf-space-3);
+}
+
+.cf-exp-theatre-brand {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-weight-bold);
+  color: var(--cf-accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cf-exp-movie-title {
+  font-family: var(--cf-font-display);
+  font-size: var(--cf-font-size-2xl);
+  font-weight: var(--cf-weight-extrabold);
+  color: var(--cf-text-primary);
+  line-height: 1.15;
+  margin: 3px 0 var(--cf-space-1);
+}
+
+.cf-exp-theatre-address {
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Prominent Vertical Match Percentage Box */
+.cf-match-box-prominent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  padding: 0.55rem 1rem;
+  background: linear-gradient(135deg, rgba(255, 51, 75, 0.22) 0%, rgba(245, 166, 35, 0.18) 100%);
+  border: 1.5px solid var(--cf-accent-primary);
+  border-radius: var(--cf-radius-md);
+  box-shadow: 0 0 18px rgba(255, 51, 75, 0.32);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cf-match-pct {
+  font-family: var(--cf-font-display);
+  font-size: 1.75rem;
+  font-weight: var(--cf-weight-extrabold);
+  color: #FFFFFF;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.cf-match-lbl {
+  font-size: 0.65rem;
+  font-weight: var(--cf-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cf-accent-gold);
+  margin-top: 3px;
+}
+
+/* Badges cluster */
+.cf-exp-badges-cluster {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  flex-wrap: wrap;
+  margin: var(--cf-space-3) 0 var(--cf-space-3);
+}
+
+.cf-amenity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--cf-border-subtle);
+  border-radius: var(--cf-radius-sm);
+  font-size: var(--cf-font-size-xs);
+  color: var(--cf-text-secondary);
+}
+
+.cf-exp-highlight-quote {
+  font-size: var(--cf-font-size-sm);
+  color: var(--cf-text-secondary);
+  font-style: italic;
+  margin-bottom: var(--cf-space-3);
+  line-height: 1.5;
+}
+
+/* Showtimes & Actions row */
+.cf-exp-showtimes-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-4);
+  padding-top: var(--cf-space-4);
+  border-top: 1px solid var(--cf-border-subtle);
+  flex-wrap: wrap;
+}
+
+.cf-exp-showtimes-pills {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  flex-wrap: wrap;
+}
+
+.cf-view-exp-btn {
+  white-space: nowrap;
+  box-shadow: 0 4px 18px var(--cf-accent-primary-glow);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1180px) {
+  .cf-experience-card {
+    grid-template-columns: 170px 220px 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  .cf-experience-card {
+    grid-template-columns: 160px 1fr;
+  }
+  .cf-exp-theatre-visual {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .cf-experience-card {
+    grid-template-columns: 1fr;
+  }
+  .cf-exp-poster-wrap {
+    height: 220px;
+    min-height: auto;
+  }
+  .cf-exp-top-bar {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .cf-match-box-prominent {
+    align-self: flex-start;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+  }
+  .cf-match-pct {
+    font-size: 1.25rem;
+  }
+  .cf-match-lbl {
+    margin-top: 0;
+  }
+}

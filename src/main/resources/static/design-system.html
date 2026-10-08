@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinemaFlow — Design System & Component Foundation</title>
+  
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="css/cinema-flow.css">
+  
+  <style>
+    /* Showcase specific helper styling */
+    .showcase-header {
+      padding: var(--cf-space-12) 0 var(--cf-space-8);
+      border-bottom: 1px solid var(--cf-border-subtle);
+      margin-bottom: var(--cf-space-10);
+    }
+    .showcase-block {
+      margin-bottom: var(--cf-space-12);
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: var(--cf-space-4);
+      margin-top: var(--cf-space-4);
+    }
+    .swatch {
+      padding: var(--cf-space-3);
+      border-radius: var(--cf-radius-md);
+      border: 1px solid var(--cf-border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: var(--cf-space-2);
+    }
+    .swatch-color {
+      height: 48px;
+      border-radius: var(--cf-radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .swatch-name {
+      font-size: var(--cf-font-size-xs);
+      font-weight: var(--cf-weight-semibold);
+      color: var(--cf-text-primary);
+    }
+    .swatch-hex {
+      font-size: 0.7rem;
+      color: var(--cf-text-muted);
+      font-family: var(--cf-font-mono);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation Bar -->
+  <header class="cf-header">
+    <div class="cf-container cf-header-inner">
+      <div class="cf-brand">
+        <div class="cf-brand-mark">
+          <svg viewBox="0 0 24 24">
+            <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2zM9 16.5v-9l7 4.5-7 4.5z"/>
+          </svg>
+        </div>
+        <span>Cinema<span class="text-vermilion">Flow</span></span>
+      </div>
+
+      <nav class="cf-flex cf-items-center cf-gap-4">
+        <span class="caption uppercase font-semibold text-muted">Design System v1.0</span>
+        <button class="cf-btn cf-btn-sm cf-btn-outline" onclick="window.scrollTo({top: document.getElementById('seat-section').offsetTop - 80, behavior: 'smooth'})">Seat Map Demo</button>
+        <button class="cf-btn cf-btn-sm cf-btn-primary" onclick="cfToast.success('CinemaFlow design foundation verified!', 'System Ready')">Test Toast</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="cf-container">
+    
+    <!-- Hero / Title -->
+    <section class="showcase-header">
+      <div class="cf-badge cf-badge-imax" style="margin-bottom: var(--cf-space-2);">Phase 1 Delivery</div>
+      <h1 class="display-hero">Design System & Frontend Foundation</h1>
+      <p class="body-lg" style="margin-top: var(--cf-space-3); max-width: 780px;">
+        The visual and architectural baseline for CinemaFlow. Built strictly on Vanilla CSS tokens, robust typography, intentional spacing scales, and high-performance cinema ticketing components.
+      </p>
+    </section>
+
+    <!-- 1. Color Palette Tokens -->
+    <section class="showcase-block">
+      <h2 class="heading-section">1. Color Palette Tokens</h2>
+      <p class="body-sm text-muted">Curated obsidian palette with cinematic vermilion, golden amber, and semantic feedback colors.</p>
+      
+      <div class="showcase-grid">
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-bg-base);"></div>
+          <div class="swatch-name">Base Canvas</div>
+          <div class="swatch-hex">#0B0D13</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-bg-surface);"></div>
+          <div class="swatch-name">Surface Card</div>
+          <div class="swatch-hex">#131722</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-bg-surface-elevated);"></div>
+          <div class="swatch-name">Surface Elevated</div>
+          <div class="swatch-hex">#1B2132</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-accent-primary);"></div>
+          <div class="swatch-name">Vermilion Primary</div>
+          <div class="swatch-hex">#FF334B</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-accent-gold);"></div>
+          <div class="swatch-name">Golden Amber</div>
+          <div class="swatch-hex">#F5A623</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-accent-cyan);"></div>
+          <div class="swatch-name">IMAX Cyan</div>
+          <div class="swatch-hex">#00D2FF</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-status-success);"></div>
+          <div class="swatch-name">Success / Available</div>
+          <div class="swatch-hex">#10B981</div>
+        </div>
+        <div class="swatch" style="background: var(--cf-bg-surface);">
+          <div class="swatch-color" style="background: var(--cf-status-warning);"></div>
+          <div class="swatch-name">Warning / Filling</div>
+          <div class="swatch-hex">#F59E0B</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Typography Scale -->
+    <section class="showcase-block">
+      <h2 class="heading-section">2. Typography Hierarchy</h2>
+      <p class="body-sm text-muted">Outfit for display brand headings, Inter for legible UI text, JetBrains Mono for tickets.</p>
+      
+      <div class="cf-card cf-card-elevated" style="margin-top: var(--cf-space-4); display: flex; flex-direction: column; gap: var(--cf-space-4);">
+        <div>
+          <span class="caption uppercase font-semibold text-muted">Heading 1 — Outfit 48px</span>
+          <h1 style="margin-top: 4px;">CinemaFlow Experience</h1>
+        </div>
+        <div>
+          <span class="caption uppercase font-semibold text-muted">Heading 2 — Outfit 36px</span>
+          <h2 style="margin-top: 4px;">Now Showing in Theatres</h2>
+        </div>
+        <div>
+          <span class="caption uppercase font-semibold text-muted">Heading 3 — Outfit 24px</span>
+          <h3 style="margin-top: 4px;">Select Your Preferred Showtime</h3>
+        </div>
+        <div>
+          <span class="caption uppercase font-semibold text-muted">Body Text — Inter 16px</span>
+          <p class="body-md" style="margin-top: 4px;">Experience cinema the way it was intended. Crystal clear laser projection, 64-channel immersive Dolby Atmos surround sound, and plush VIP recliners.</p>
+        </div>
+        <div>
+          <span class="caption uppercase font-semibold text-muted">Monospace / Ticket Code — JetBrains Mono</span>
+          <div class="mono text-gold" style="margin-top: 4px; font-size: 1.1rem;">BOOKING-REF: CF-849204 // SEATS: [F12, F13]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Button Hierarchy -->
+    <section class="showcase-block">
+      <h2 class="heading-section">3. Button Hierarchy & States</h2>
+      <div class="cf-card" style="margin-top: var(--cf-space-4);">
+        <div class="cf-flex cf-flex-wrap cf-items-center cf-gap-4">
+          <button class="cf-btn cf-btn-primary cf-btn-lg">Primary Action (Large)</button>
+          <button class="cf-btn cf-btn-primary cf-btn-md">Primary Action (Medium)</button>
+          <button class="cf-btn cf-btn-primary cf-btn-sm">Primary Action (Small)</button>
+          <button class="cf-btn cf-btn-secondary">Secondary Surface</button>
+          <button class="cf-btn cf-btn-outline">Outline Button</button>
+          <button class="cf-btn cf-btn-ghost">Ghost Action</button>
+          <button class="cf-btn cf-btn-gold">VIP Recliner Pass</button>
+          <button class="cf-btn cf-btn-primary is-loading">Loading</button>
+          <button class="cf-btn cf-btn-primary is-disabled">Disabled</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Badges & Tags -->
+    <section class="showcase-block">
+      <h2 class="heading-section">4. Badges, Filters & Status Pills</h2>
+      <div class="cf-card" style="margin-top: var(--cf-space-4); display: flex; flex-direction: column; gap: var(--cf-space-4);">
+        <div class="cf-flex cf-flex-wrap cf-items-center cf-gap-3">
+          <span class="cf-badge cf-badge-imax">IMAX Laser</span>
+          <span class="cf-badge cf-badge-3d">RealD 3D</span>
+          <span class="cf-badge cf-badge-4dx">4DX Motion</span>
+          <span class="cf-badge cf-badge-atmos">Dolby Atmos</span>
+          <span class="cf-badge cf-badge-censor cf-badge-censor-u">U</span>
+          <span class="cf-badge cf-badge-censor cf-badge-censor-ua">UA 16+</span>
+          <span class="cf-badge cf-badge-censor cf-badge-censor-a">A</span>
+          <span class="cf-badge cf-badge-match">⚡ 98% Match</span>
+        </div>
+
+        <div class="cf-flex cf-flex-wrap cf-items-center cf-gap-4" style="border-top: 1px solid var(--cf-border-subtle); padding-top: var(--cf-space-3);">
+          <div class="cf-status-pill"><span class="cf-status-dot available"></span> Available</div>
+          <div class="cf-status-pill"><span class="cf-status-dot filling"></span> Filling Fast</div>
+          <div class="cf-status-pill"><span class="cf-status-dot full"></span> Sold Out</div>
+        </div>
+
+        <div class="cf-flex cf-flex-wrap cf-items-center cf-gap-2" style="border-top: 1px solid var(--cf-border-subtle); padding-top: var(--cf-space-3);">
+          <button class="cf-filter-pill is-active">Action & Sci-Fi</button>
+          <button class="cf-filter-pill">English Audio</button>
+          <button class="cf-filter-pill">Tonight (After 7 PM)</button>
+          <button class="cf-filter-pill">Within 10 km</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Form Controls -->
+    <section class="showcase-block">
+      <h2 class="heading-section">5. Form Controls & Interactive Sliders</h2>
+      <div class="cf-card" style="margin-top: var(--cf-space-4); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--cf-space-6);">
+        
+        <div class="cf-form-group">
+          <label class="cf-label">Search Movies or Theatres</label>
+          <div class="cf-search-box">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" class="cf-input cf-search-input" placeholder="Search by title, genre, or director...">
+          </div>
+        </div>
+
+        <div class="cf-form-group">
+          <label class="cf-label">Select City / Region</label>
+          <select class="cf-select">
+            <option value="mumbai">Mumbai (MMR)</option>
+            <option value="delhi">Delhi NCR</option>
+            <option value="bengaluru">Bengaluru</option>
+            <option value="hyderabad">Hyderabad</option>
+          </select>
+        </div>
+
+        <div class="cf-form-group" style="grid-column: 1 / -1;">
+          <div class="cf-flex cf-justify-between cf-items-center">
+            <label class="cf-label">Discovery Radius</label>
+            <span class="mono text-vermilion font-bold" id="radius-val">15 km</span>
+          </div>
+          <input type="range" class="cf-range" min="2" max="50" value="15" oninput="document.getElementById('radius-val').innerText = this.value + ' km'">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. Movie Card Presentation -->
+    <section class="showcase-block">
+      <h2 class="heading-section">6. Movie Poster Presentation (2:3 Aspect Ratio)</h2>
+      <p class="body-sm text-muted">Cinematic poster treatment with rating bar overlay, hover zoom, and metadata typography.</p>
+      
+      <div class="cf-movie-grid" style="margin-top: var(--cf-space-4);">
+        
+        <!-- Movie Card 1 -->
+        <div class="cf-movie-card">
+          <div class="cf-poster-wrap">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80" alt="Dune Odyssey" class="cf-poster-img">
+            <div class="cf-poster-rating-bar">
+              <div class="cf-rating-chip">
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>8.9</span>
+              </div>
+              <span class="cf-censor-chip">UA 13+</span>
+            </div>
+          </div>
+          <div class="cf-movie-details">
+            <div class="cf-movie-title">Dune: Part Two</div>
+            <div class="cf-movie-genres">Sci-Fi • Action • Adventure</div>
+            <div class="cf-movie-meta">
+              <span>English, Hindi</span>
+              <span>•</span>
+              <span>2h 46m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 2 -->
+        <div class="cf-movie-card">
+          <div class="cf-poster-wrap">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80" alt="Cyber Neon 2099" class="cf-poster-img">
+            <div class="cf-poster-rating-bar">
+              <div class="cf-rating-chip">
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>9.2</span>
+              </div>
+              <span class="cf-censor-chip">A</span>
+            </div>
+          </div>
+          <div class="cf-movie-details">
+            <div class="cf-movie-title">Cyber City 2099</div>
+            <div class="cf-movie-genres">Thriller • Cyberpunk</div>
+            <div class="cf-movie-meta">
+              <span>English</span>
+              <span>•</span>
+              <span>2h 10m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 3 -->
+        <div class="cf-movie-card">
+          <div class="cf-poster-wrap">
+            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80" alt="Shadows in the Cosmos" class="cf-poster-img">
+            <div class="cf-poster-rating-bar">
+              <div class="cf-rating-chip">
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>8.4</span>
+              </div>
+              <span class="cf-censor-chip">UA 16+</span>
+            </div>
+          </div>
+          <div class="cf-movie-details">
+            <div class="cf-movie-title">Interstellar Echoes</div>
+            <div class="cf-movie-genres">Mystery • Drama</div>
+            <div class="cf-movie-meta">
+              <span>English</span>
+              <span>•</span>
+              <span>2h 25m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 4 (Skeleton Loader preview) -->
+        <div class="cf-movie-card">
+          <div class="cf-skeleton cf-skeleton-poster"></div>
+          <div class="cf-skeleton cf-skeleton-title"></div>
+          <div class="cf-skeleton cf-skeleton-meta"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. Theatre Showtime Card -->
+    <section class="showcase-block">
+      <h2 class="heading-section">7. Theatre & Showtime Presentation</h2>
+      
+      <div class="cf-theatre-card" style="margin-top: var(--cf-space-4);">
+        <div class="cf-theatre-header">
+          <div>
+            <div class="cf-theatre-name">CinemaFlow Luxe: Palladium Mall, Lower Parel</div>
+            <div class="cf-theatre-location">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+              <span>3.2 km away • Screen 1 (IMAX Laser with Dolby Atmos)</span>
+            </div>
+          </div>
+          <div class="cf-theatre-amenities">
+            <span class="cf-amenity-tag">Gourmet Food</span>
+            <span class="cf-amenity-tag">Valet Parking</span>
+            <span class="cf-amenity-tag">Recliner Seats</span>
+          </div>
+        </div>
+
+        <div class="cf-showtime-grid">
+          <a href="#seat-section" class="cf-showtime-btn">
+            <span class="cf-showtime-time">10:30 AM</span>
+            <span class="cf-showtime-format">IMAX 3D</span>
+            <span class="cf-status-dot available" style="margin-top: 4px;"></span>
+          </a>
+
+          <a href="#seat-section" class="cf-showtime-btn">
+            <span class="cf-showtime-time">02:15 PM</span>
+            <span class="cf-showtime-format">IMAX 3D</span>
+            <span class="cf-status-dot filling" style="margin-top: 4px;"></span>
+          </a>
+
+          <a href="#seat-section" class="cf-showtime-btn">
+            <span class="cf-showtime-time">06:00 PM</span>
+            <span class="cf-showtime-format">IMAX 3D</span>
+            <span class="cf-status-dot full" style="margin-top: 4px;"></span>
+          </a>
+
+          <a href="#seat-section" class="cf-showtime-btn">
+            <span class="cf-showtime-time">09:45 PM</span>
+            <span class="cf-showtime-format">IMAX 3D</span>
+            <span class="cf-status-dot available" style="margin-top: 4px;"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Interactive Seat Map Preview -->
+    <section class="showcase-block" id="seat-section">
+      <h2 class="heading-section">8. Interactive Seat Map Visual Language</h2>
+      <p class="body-sm text-muted">Curved screen orientation, tier dividers (Recliner, Prime, Classic), and interactive multi-seat toggling.</p>
+      
+      <div class="cf-card cf-card-elevated" style="margin-top: var(--cf-space-4); padding: var(--cf-space-8) var(--cf-space-4);">
+        
+        <!-- Curved Screen Graphic -->
+        <div class="cf-screen-wrap">
+          <div class="cf-screen-curve"></div>
+          <div class="cf-screen-light"></div>
+          <div class="cf-screen-label">Screen This Way (IMAX 70mm Curved)</div>
+        </div>
+
+        <!-- Seat Grid -->
+        <div class="cf-seatmap-viewport">
+          <div class="cf-seatmap-inner" id="demo-seat-grid">
+            
+            <!-- Tier 1: Recliner VIP -->
+            <div class="cf-tier-section">
+              <div class="cf-tier-header">
+                <span>VIP Recliner Row — ₹450</span>
+                <span class="caption">Dolby Atmos Surround</span>
+              </div>
+              <div class="cf-seat-row">
+                <span class="cf-row-label">A</span>
+                <div class="cf-seat tier-recliner" data-seat="A1" data-price="450">1</div>
+                <div class="cf-seat tier-recliner" data-seat="A2" data-price="450">2</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-recliner" data-seat="A3" data-price="450">3</div>
+                <div class="cf-seat tier-recliner" data-seat="A4" data-price="450">4</div>
+                <div class="cf-seat tier-recliner" data-seat="A5" data-price="450">5</div>
+                <div class="cf-seat tier-recliner is-sold" data-seat="A6" data-price="450">6</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-recliner" data-seat="A7" data-price="450">7</div>
+                <div class="cf-seat tier-recliner" data-seat="A8" data-price="450">8</div>
+              </div>
+            </div>
+
+            <!-- Tier 2: Prime -->
+            <div class="cf-tier-section">
+              <div class="cf-tier-header">
+                <span>Prime View — ₹280</span>
+                <span class="caption">Optimal Eye-Level Center</span>
+              </div>
+              <div class="cf-seat-row">
+                <span class="cf-row-label">B</span>
+                <div class="cf-seat tier-prime" data-seat="B1" data-price="280">1</div>
+                <div class="cf-seat tier-prime" data-seat="B2" data-price="280">2</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-prime" data-seat="B3" data-price="280">3</div>
+                <div class="cf-seat tier-prime is-locked" data-seat="B4" data-price="280" title="Locked by another buyer">4</div>
+                <div class="cf-seat tier-prime is-locked" data-seat="B5" data-price="280" title="Locked by another buyer">5</div>
+                <div class="cf-seat tier-prime" data-seat="B6" data-price="280">6</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-prime" data-seat="B7" data-price="280">7</div>
+                <div class="cf-seat tier-prime" data-seat="B8" data-price="280">8</div>
+              </div>
+              <div class="cf-seat-row">
+                <span class="cf-row-label">C</span>
+                <div class="cf-seat tier-prime" data-seat="C1" data-price="280">1</div>
+                <div class="cf-seat tier-prime" data-seat="C2" data-price="280">2</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-prime is-sold" data-seat="C3" data-price="280">3</div>
+                <div class="cf-seat tier-prime is-sold" data-seat="C4" data-price="280">4</div>
+                <div class="cf-seat tier-prime" data-seat="C5" data-price="280">5</div>
+                <div class="cf-seat tier-prime" data-seat="C6" data-price="280">6</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-prime" data-seat="C7" data-price="280">7</div>
+                <div class="cf-seat tier-prime" data-seat="C8" data-price="280">8</div>
+              </div>
+            </div>
+
+            <!-- Tier 3: Classic -->
+            <div class="cf-tier-section">
+              <div class="cf-tier-header">
+                <span>Classic Seating — ₹190</span>
+                <span class="caption">Standard Cinema Sound</span>
+              </div>
+              <div class="cf-seat-row">
+                <span class="cf-row-label">D</span>
+                <div class="cf-seat tier-classic" data-seat="D1" data-price="190">1</div>
+                <div class="cf-seat tier-classic" data-seat="D2" data-price="190">2</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-classic" data-seat="D3" data-price="190">3</div>
+                <div class="cf-seat tier-classic" data-seat="D4" data-price="190">4</div>
+                <div class="cf-seat tier-classic" data-seat="D5" data-price="190">5</div>
+                <div class="cf-seat tier-classic" data-seat="D6" data-price="190">6</div>
+                <div class="cf-seat-aisle"></div>
+                <div class="cf-seat tier-classic" data-seat="D7" data-price="190">7</div>
+                <div class="cf-seat tier-classic" data-seat="D8" data-price="190">8</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="cf-seat-legend">
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="border: 1px solid var(--cf-seat-classic-border); background: var(--cf-seat-classic-bg);"></span>
+            <span>Classic (₹190)</span>
+          </div>
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="border: 1px solid var(--cf-seat-prime-border); background: var(--cf-seat-prime-bg);"></span>
+            <span>Prime (₹280)</span>
+          </div>
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="border: 1px solid var(--cf-seat-recliner-border); background: var(--cf-seat-recliner-bg);"></span>
+            <span>Recliner (₹450)</span>
+          </div>
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="background: var(--cf-seat-selected-bg);"></span>
+            <span>Selected</span>
+          </div>
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="background: var(--cf-seat-locked-bg);"></span>
+            <span>Locked (Temp)</span>
+          </div>
+          <div class="cf-legend-item">
+            <span class="cf-legend-sample" style="background: var(--cf-seat-sold-bg); border: 1px solid var(--cf-seat-sold-border);"></span>
+            <span>Sold</span>
+          </div>
+        </div>
+
+        <!-- Live Selection Calculation Feedback -->
+        <div class="cf-flex cf-justify-between cf-items-center" style="margin-top: var(--cf-space-6); padding: var(--cf-space-4); background: var(--cf-bg-surface); border-radius: var(--cf-radius-md);">
+          <div>
+            <div class="caption text-muted">Selected Seats: <span id="demo-seats-list" class="mono text-primary font-bold">None</span></div>
+            <div class="heading-card" style="margin-top: 2px;">Total: <span class="text-vermilion" id="demo-total-price">₹0</span></div>
+          </div>
+          <button class="cf-btn cf-btn-primary" id="demo-pay-btn" disabled onclick="cfToast.success('Seats reserved successfully! Proceeding to checkout.', 'Reservation Locked')">Proceed to Pay</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 9. Digital Boarding Pass Ticket -->
+    <section class="showcase-block">
+      <h2 class="heading-section">9. Digital Boarding Pass Ticket</h2>
+      <p class="body-sm text-muted">Perforated entry pass with scannable QR, booking reference code, and venue details.</p>
+      
+      <div class="cf-ticket-container" style="margin-top: var(--cf-space-6);">
+        <div class="cf-ticket">
+          <!-- Top Section -->
+          <div class="cf-ticket-top">
+            <div class="cf-ticket-badge-row">
+              <span class="cf-badge cf-badge-imax">IMAX 3D</span>
+              <span class="cf-ticket-ref">CF-849204</span>
+            </div>
+            <div class="cf-ticket-movie-title">Dune: Part Two</div>
+            <div class="cf-ticket-theatre">CinemaFlow Luxe • Screen 1 (Atmos)</div>
+
+            <div class="cf-ticket-info-grid">
+              <div>
+                <div class="cf-ticket-field-label">Date</div>
+                <div class="cf-ticket-field-value">Sat, 12 Oct</div>
+              </div>
+              <div>
+                <div class="cf-ticket-field-label">Showtime</div>
+                <div class="cf-ticket-field-value">08:15 PM</div>
+              </div>
+              <div>
+                <div class="cf-ticket-field-label">Seats</div>
+                <div class="cf-ticket-field-value text-vermilion">F12, F13</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Perforated Divider with Cutout Notches -->
+          <div class="cf-ticket-divider">
+            <div class="cf-ticket-perforation-line"></div>
+          </div>
+
+          <!-- Bottom Section / QR -->
+          <div class="cf-ticket-bottom">
+            <div class="cf-ticket-qr-wrap">
+              <!-- Inline High-Contrast SVG QR code representation -->
+              <svg viewBox="0 0 100 100" fill="#0B0D13">
+                <rect x="10" y="10" width="25" height="25" fill="#0B0D13"/>
+                <rect x="15" y="15" width="15" height="15" fill="#FFFFFF"/>
+                <rect x="19" y="19" width="7" height="7" fill="#0B0D13"/>
+                <rect x="65" y="10" width="25" height="25" fill="#0B0D13"/>
+                <rect x="70" y="15" width="15" height="15" fill="#FFFFFF"/>
+                <rect x="74" y="19" width="7" height="7" fill="#0B0D13"/>
+                <rect x="10" y="65" width="25" height="25" fill="#0B0D13"/>
+                <rect x="15" y="70" width="15" height="15" fill="#FFFFFF"/>
+                <rect x="19" y="74" width="7" height="7" fill="#0B0D13"/>
+                <rect x="42" y="12" width="6" height="12"/>
+                <rect x="42" y="30" width="10" height="6"/>
+                <rect x="55" y="42" width="8" height="8"/>
+                <rect x="40" y="55" width="14" height="6"/>
+                <rect x="65" y="60" width="10" height="10"/>
+                <rect x="78" y="75" width="12" height="15"/>
+              </svg>
+            </div>
+            <div class="cf-ticket-scan-prompt">Scan this code at cinema gate for seamless entry</div>
+            <div class="cf-ticket-seats-pill">Audi 1 • Prime Recliner</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Empty States & Modals -->
+    <section class="showcase-block">
+      <h2 class="heading-section">10. Empty States, Modals & Toast Triggers</h2>
+      
+      <div class="cf-grid cf-grid-cols-2 cf-gap-6" style="margin-top: var(--cf-space-4);">
+        <!-- Empty State Preview -->
+        <div class="cf-empty-state">
+          <div class="cf-empty-icon">
+            <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+          </div>
+          <div class="cf-empty-title">No Showtimes Found</div>
+          <div class="cf-empty-description">There are no matching showtimes for this filter criteria in your selected area. Try widening your radius or choosing another date.</div>
+          <button class="cf-btn cf-btn-secondary cf-btn-sm" onclick="cfToast.info('Filters have been reset.', 'Reset Complete')">Reset All Filters</button>
+        </div>
+
+        <!-- Interactive Dialog Controller -->
+        <div class="cf-card cf-flex cf-flex-col cf-justify-between">
+          <div>
+            <div class="heading-card">Dialog & Alert Controllers</div>
+            <p class="body-sm text-muted" style="margin-top: var(--cf-space-2);">Test responsive accessible modal dialogs and non-blocking toast notifications.</p>
+          </div>
+          
+          <div class="cf-flex cf-flex-wrap cf-gap-3" style="margin-top: var(--cf-space-6);">
+            <button class="cf-btn cf-btn-outline" data-modal-open="demo-modal">Open City Modal</button>
+            <button class="cf-btn cf-btn-secondary" onclick="cfToast.success('Ticket CF-849204 confirmed!', 'Booking Complete')">Success Toast</button>
+            <button class="cf-btn cf-btn-secondary" onclick="cfToast.error('Seat F12 is currently locked by another user.', 'Seat Conflict')">Error Toast</button>
+            <button class="cf-btn cf-btn-secondary" onclick="cfToast.warning('Your 10-minute reservation expires in 2 minutes.', 'Timer Alert')">Warning Toast</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sample Accessible City Modal -->
+  <div class="cf-modal-backdrop" id="demo-modal">
+    <div class="cf-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="cf-modal-header">
+        <h3 class="cf-modal-title" id="modal-title">Choose Your City</h3>
+        <button class="cf-modal-close" data-modal-close aria-label="Close dialog">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="cf-modal-body">
+        <p class="body-sm text-muted" style="margin-bottom: var(--cf-space-4);">Select your location to discover nearby theatres, live showtimes, and cinema formats.</p>
+        <div class="cf-grid cf-grid-cols-2 cf-gap-3">
+          <button class="cf-btn cf-btn-secondary cf-justify-between" data-modal-close onclick="cfToast.info('Location set to Mumbai (MMR)', 'City Changed')">
+            <span>Mumbai</span>
+            <span class="caption text-muted">MMR</span>
+          </button>
+          <button class="cf-btn cf-btn-secondary cf-justify-between" data-modal-close onclick="cfToast.info('Location set to Delhi NCR', 'City Changed')">
+            <span>Delhi NCR</span>
+            <span class="caption text-muted">Capital</span>
+          </button>
+          <button class="cf-btn cf-btn-secondary cf-justify-between" data-modal-close onclick="cfToast.info('Location set to Bengaluru', 'City Changed')">
+            <span>Bengaluru</span>
+            <span class="caption text-muted">KA</span>
+          </button>
+          <button class="cf-btn cf-btn-secondary cf-justify-between" data-modal-close onclick="cfToast.info('Location set to Hyderabad', 'City Changed')">
+            <span>Hyderabad</span>
+            <span class="caption text-muted">TS</span>
+          </button>
+        </div>
+      </div>
+      <div class="cf-modal-footer">
+        <button class="cf-btn cf-btn-ghost" data-modal-close>Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="cf-footer">
+    <div class="cf-container cf-flex cf-justify-between cf-items-center cf-flex-wrap cf-gap-4">
+      <div class="cf-brand">
+        <div class="cf-brand-mark">
+          <svg viewBox="0 0 24 24">
+            <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2zM9 16.5v-9l7 4.5-7 4.5z"/>
+          </svg>
+        </div>
+        <span>Cinema<span class="text-vermilion">Flow</span></span>
+      </div>
+      <div class="caption text-muted">
+        CinemaFlow Design Foundation © 2026. Built with Vanilla CSS & Modern Standards.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="js/core/toast.js"></script>
+  <script src="js/core/modal.js"></script>
+  <script src="js/core/api-client.js"></script>
+
+  <!-- Interactive Seat Demo Script -->
+  <script>
+    const selectedSeats = new Map();
+    const seatElements = document.querySelectorAll('.cf-seat:not(.is-sold):not(.is-locked)');
+    const seatsListEl = document.getElementById('demo-seats-list');
+    const totalPriceEl = document.getElementById('demo-total-price');
+    const payBtn = document.getElementById('demo-pay-btn');
+
+    seatElements.forEach(seat => {
+      seat.addEventListener('click', () => {
+        const seatId = seat.getAttribute('data-seat');
+        const price = parseInt(seat.getAttribute('data-price'), 10);
+
+        if (selectedSeats.has(seatId)) {
+          selectedSeats.delete(seatId);
+          seat.classList.remove('is-selected');
+        } else {
+          if (selectedSeats.size >= 8) {
+            cfToast.warning('You can select a maximum of 8 seats per booking.', 'Seat Limit');
+            return;
+          }
+          selectedSeats.set(seatId, price);
+          seat.classList.add('is-selected');
+        }
+
+        updateSummary();
+      });
+    });
+
+    function updateSummary() {
+      if (selectedSeats.size === 0) {
+        seatsListEl.innerText = 'None';
+        totalPriceEl.innerText = '₹0';
+        payBtn.disabled = true;
+      } else {
+        const seatNames = Array.from(selectedSeats.keys()).join(', ');
+        let sum = 0;
+        selectedSeats.forEach(p => sum += p);
+        seatsListEl.innerText = `${seatNames} (${selectedSeats.size} seats)`;
+        totalPriceEl.innerText = `₹${sum}`;
+        payBtn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

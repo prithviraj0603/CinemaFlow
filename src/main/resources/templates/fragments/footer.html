@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <footer th:fragment="footer" class="cf-footer">
+    <div class="cf-container">
+      <div class="cf-grid cf-grid-cols-4 cf-gap-8" style="margin-bottom: var(--cf-space-10);">
+        <div style="grid-column: span 1;">
+          <div class="cf-brand" style="margin-bottom: var(--cf-space-3);">
+            <div class="cf-brand-mark">
+              <svg viewBox="0 0 24 24">
+                <path d="M19.82 2H4.18C2.97 2 2 2.97 2 4.18v15.64C2 21.03 2.97 22 4.18 22h15.64c1.21 0 2.18-.97 2.18-2.18V4.18C22 2.97 21.03 2 19.82 2zM9 16.5v-9l7 4.5-7 4.5z"/>
+              </svg>
+            </div>
+            <span>Cinema<span class="text-vermilion">Flow</span></span>
+          </div>
+          <p class="body-sm text-muted">
+            The next-generation cinema discovery and ticket booking platform designed for authentic movie lovers.
+          </p>
+        </div>
+
+        <div>
+          <div class="caption uppercase font-semibold text-primary" style="margin-bottom: var(--cf-space-3);">Cinema Formats</div>
+          <ul class="body-sm text-secondary" style="display: flex; flex-direction: column; gap: var(--cf-space-2);">
+            <li><a href="#" class="text-muted">IMAX Laser 70mm</a></li>
+            <li><a href="#" class="text-muted">Dolby Atmos 7.1</a></li>
+            <li><a href="#" class="text-muted">4DX Experiential</a></li>
+            <li><a href="#" class="text-muted">CinemaFlow LUXE</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="caption uppercase font-semibold text-primary" style="margin-bottom: var(--cf-space-3);">Discovery</div>
+          <ul class="body-sm text-secondary" style="display: flex; flex-direction: column; gap: var(--cf-space-2);">
+            <li><a th:href="@{/discover}" class="text-vermilion font-medium">What Should I Watch?</a></li>
+            <li><a th:href="@{/}" class="text-muted">Now Showing</a></li>
+            <li><a th:href="@{/advance-booking}" class="text-muted">Advance Booking</a></li>
+            <li><a th:href="@{/design-system}" class="text-gold font-medium">Design System Spec</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="caption uppercase font-semibold text-primary" style="margin-bottom: var(--cf-space-3);">Assurance</div>
+          <ul class="body-sm text-secondary" style="display: flex; flex-direction: column; gap: var(--cf-space-2);">
+            <li><a href="#" class="text-muted">100% Ticket Guarantee</a></li>
+            <li><a href="#" class="text-muted">Instant Cancellation</a></li>
+            <li><a href="#" class="text-muted">Digital QR Pass</a></li>
+            <li><a href="#" class="text-muted">24/7 Concierge</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cf-flex cf-justify-between cf-items-center cf-flex-wrap cf-gap-4" style="border-top: 1px solid var(--cf-border-subtle); padding-top: var(--cf-space-6);">
+        <div class="caption text-muted">
+          CinemaFlow © 2026. Built with Java, Spring Boot, MySQL, Thymeleaf & Vanilla CSS.
+        </div>
+        <div class="caption text-muted">
+          Original Architecture & Brand Identity • No Generic AI Templates
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
